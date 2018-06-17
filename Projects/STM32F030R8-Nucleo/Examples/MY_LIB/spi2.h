@@ -16,7 +16,7 @@
 #define SPI2_RELEASE_RESET()            __HAL_RCC_SPI2_RELEASE_RESET()
 
 #define SPI2_CLKPOLARITY                SPI_POLARITY_LOW
-#define SPI2_CLKPHASE                   SPI_PHASE_1EDGE
+#define SPI2_CLKPHASE                   SPI_PHASE_2EDGE
 #define SPI2_BAUDRATEPRESCALER          SPI_BAUDRATEPRESCALER_32
 
 #define SPI2_SCK_PIN                    GPIO_PIN_13

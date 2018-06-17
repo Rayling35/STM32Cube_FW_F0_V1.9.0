@@ -52,11 +52,11 @@ static void gpio_b2_exti_init(void)
 	
 	HAL_GPIO_Init(PB2_PORT, &GPIO_InitStruct);
 	
-	HAL_NVIC_SetPriority(EXTI0_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+	HAL_NVIC_SetPriority(EXTI4_15_IRQn, 2, 0);
+	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 }
 
-void EXTI0_IRQHandler(void)
+void EXTI4_15_IRQHandler(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(PB2_PIN);
 }
