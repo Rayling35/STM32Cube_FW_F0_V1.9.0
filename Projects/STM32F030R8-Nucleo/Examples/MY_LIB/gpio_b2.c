@@ -47,16 +47,16 @@ static void gpio_b2_exti_init(void)
 	
 	GPIO_InitStruct.Pin   = PB2_PIN;
 	GPIO_InitStruct.Mode  = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	GPIO_InitStruct.Pull  = GPIO_PULLDOWN;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	
 	HAL_GPIO_Init(PB2_PORT, &GPIO_InitStruct);
 	
-	HAL_NVIC_SetPriority(EXTI4_15_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+	HAL_NVIC_SetPriority(EXTI2_3_IRQn, 2, 0);
+	HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
 }
 
-void EXTI4_15_IRQHandler(void)
+void EXTI2_3_IRQHandler(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(PB2_PIN);
 }

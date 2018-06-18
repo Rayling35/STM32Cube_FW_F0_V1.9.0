@@ -47,7 +47,7 @@ static void gpio_c8_exti_init(void)
 	
 	GPIO_InitStruct.Pin   = PC8_PIN;
 	GPIO_InitStruct.Mode  = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct.Pull  = GPIO_NOPULL;
+	GPIO_InitStruct.Pull  = GPIO_PULLDOWN;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 	
 	HAL_GPIO_Init(PC8_PORT, &GPIO_InitStruct);
