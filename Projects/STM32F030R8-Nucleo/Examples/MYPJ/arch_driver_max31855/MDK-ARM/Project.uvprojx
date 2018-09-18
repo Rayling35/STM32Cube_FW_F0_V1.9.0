@@ -336,7 +336,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER, STM32F030x8, SPI1_CS0_DEV</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_driver</IncludePath>
+              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -398,12 +398,12 @@
             <File>
               <FileName>spi_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\arch_driver\spi_driver.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\arch_driver\hal\spi_driver.c</FilePath>
             </File>
             <File>
               <FileName>max31855_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\arch_driver\max31855_driver.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\arch_driver\driver\max31855_driver.c</FilePath>
             </File>
           </Files>
         </Group>
