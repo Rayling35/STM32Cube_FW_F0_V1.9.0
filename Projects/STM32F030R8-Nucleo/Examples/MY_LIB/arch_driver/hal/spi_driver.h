@@ -6,13 +6,13 @@
 
 
 struct spi_data {
-	struct spi_api *spi_cs_hal;
+	struct spi_api *Spi_cs_hal;
 };
 
 struct spi_config {
-	uint32_t tx_timeout;
-	uint32_t rx_timeout;
-	uint32_t tx_rx_timeout;
+	uint32_t value_tx_timeout;
+	uint32_t value_rx_timeout;
+	uint32_t value_tx_rx_timeout;
 };
 
 #ifdef SPI1_CS0_DEV

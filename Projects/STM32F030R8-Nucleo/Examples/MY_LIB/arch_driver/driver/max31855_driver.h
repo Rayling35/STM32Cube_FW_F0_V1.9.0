@@ -6,12 +6,12 @@
 
 
 struct max31855_data {
-	struct device *spi;
+	struct device *Spi;
 	
-	int t1;
-	int t2;
-	int j1;
-	int j2;
+	int value_t1;
+	int value_t2;
+	int value_j1;
+	int value_j2;
 };
 
 struct device* max31855_device_binding(void);
