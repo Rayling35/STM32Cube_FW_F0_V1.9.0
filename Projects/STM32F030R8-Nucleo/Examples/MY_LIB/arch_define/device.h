@@ -9,7 +9,7 @@ struct device {
 	const void *api;
 	void *data;
 	const void *config;
-	int (*init)(struct device *dev);
+	int (*init)(struct device *Dev);
 };
 
 

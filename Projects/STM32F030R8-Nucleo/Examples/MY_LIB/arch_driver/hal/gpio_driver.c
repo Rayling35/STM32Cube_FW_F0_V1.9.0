@@ -2,10 +2,11 @@
  * SPDX-License-Identifier: MIT
  */
 #include "stm32f0xx_hal.h"
+#include "cmsis_os.h"
 #include "device.h"
 #include "api_define.h"
 #include "gpio_driver.h"
-#include "gpio_common_api.h"
+#include "api_gpio_common.h"
 
 
 static int read_data(struct device *dev)
@@ -32,10 +33,44 @@ static void toggle_write_data(struct device *dev)
 	gpio_hal->toggle_write();
 }
 
+static uint32_t press_time_data(struct device *dev, enum count_unit e_unit)
+{
+	struct gpio_data *d_data  = dev->data;
+	struct gpio_api *gpio_hal = d_data->gpio_hal;
+	int no_press_status;
+	uint32_t count;
+	
+	no_press_status = gpio_hal->read();
+	
+	switch (e_unit) {
+		case MILLISECOND:
+			while(1) {
+				if(gpio_hal->read() != no_press_status) {
+					count = osKernelSysTick();
+					do {
+					}while(gpio_hal->read() != no_press_status);
+					return osKernelSysTick() - count;
+				}
+			}
+		case SECOND:
+			while(1) {
+				if(gpio_hal->read() != no_press_status) {
+					count = osKernelSysTick();
+					do {
+					}while(gpio_hal->read() != no_press_status);
+					return (osKernelSysTick() - count) / 1000;
+				}
+			}
+		default:
+			return 0;
+	}
+}
+
 static const struct gpio_common_api gpio_common_api = {
 	.read         = read_data,
 	.write        = write_data,
 	.toggle_write = toggle_write_data,
+	.press_time   = press_time_data,
 };
 
 
