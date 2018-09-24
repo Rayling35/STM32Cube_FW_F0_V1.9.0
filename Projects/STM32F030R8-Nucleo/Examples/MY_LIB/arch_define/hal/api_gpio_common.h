@@ -1,8 +1,8 @@
 /* Copyright (C) 2018 Rayling <https://github.com/Rayling35>
  * SPDX-License-Identifier: MIT
  */
-#ifndef __GPIO_COMMON_API_H
-#define __GPIO_COMMON_API_H
+#ifndef __API_GPIO_COMMON_H
+#define __API_GPIO_COMMON_H
 
 
 enum count_unit {
@@ -22,6 +22,7 @@ struct gpio_common_api {
 	gpio_api_3 toggle_write;
 	gpio_api_4 press_time;
 };
+
 
                /*-----------APP--------------*/
 static inline int gpio_init(struct device *Dev)
