@@ -6,7 +6,7 @@
 
 
 struct ht1621_data {
-	uint8_t data;
+	uint8_t val_data;
 };
 
 #define  BIAS          0x29

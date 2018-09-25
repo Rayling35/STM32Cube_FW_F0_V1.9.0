@@ -336,7 +336,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER, STM32F030x8, GPIO_C5_DEV, GPIO_C6_DEV, GPIO_C8_DEV, C5_OUTPUT, C6_OUTPUT, C8_OUTPUT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver;..\..\..\MY_LIB\extra</IncludePath>
+              <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver;..\..\..\MY_LIB\arch_driver\ap;..\..\..\MY_LIB\extra</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -408,7 +408,17 @@
             <File>
               <FileName>pz_lcd_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\arch_driver\driver\pz_lcd_driver.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\arch_driver\ap\pz_lcd_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MY_LIB/Extra</GroupName>
+          <Files>
+            <File>
+              <FileName>ht1621.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\MY_LIB\extra\ht1621.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -439,11 +449,6 @@
               <FileName>gpio_c8.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\MY_LIB\gpio_c8.c</FilePath>
-            </File>
-            <File>
-              <FileName>ht1621.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\extra\ht1621.c</FilePath>
             </File>
           </Files>
         </Group>

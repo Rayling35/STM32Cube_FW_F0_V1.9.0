@@ -6,7 +6,7 @@
 
 
 struct gpio_data {
-	struct gpio_api *gpio_hal;
+	struct gpio_api *Gpio_hal;
 };
 
 #ifdef GPIO_B2_DEV

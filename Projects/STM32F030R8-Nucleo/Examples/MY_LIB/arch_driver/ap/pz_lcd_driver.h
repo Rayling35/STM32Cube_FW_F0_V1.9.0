@@ -6,7 +6,7 @@
 
 
 struct pz_lcd_data {
-	struct device *ht1621;
+	struct device *Ht1621;
 };
 
 struct device* pz_lcd_device_binding(void);

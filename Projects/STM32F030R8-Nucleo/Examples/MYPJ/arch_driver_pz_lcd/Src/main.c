@@ -6,7 +6,7 @@
 #include "stm32f0xx_hal.h"
 #include "device.h"
 #include "pz_lcd_driver.h"
-#include "lcd_common_api.h"
+#include "api_lcd_common.h"
 #include "main.h"
 
 
@@ -15,36 +15,36 @@ int main(void)
 	system_initialization();
 	uart_printf_init();
 	
-	struct device *pz_lcd = pz_lcd_device_binding();
-	struct lcd_value voltage;
-	struct lcd_value current;
-	struct lcd_value power;
-	struct lcd_value consumption;
+	struct device *Pz_lcd = pz_lcd_device_binding();
+	struct lcd_value Voltage;
+	struct lcd_value Current;
+	struct lcd_value Power;
+	struct lcd_value Consumption;
 	
-	lcd_init(pz_lcd);
+	lcd_init(Pz_lcd);
 	printf("All device init finish\r\n");
 	
-	lcd_set_all(pz_lcd);
+	lcd_set_all(Pz_lcd);
 	HAL_Delay(500);
-	lcd_clean_all(pz_lcd);
+	lcd_clean_all(Pz_lcd);
 	HAL_Delay(500);
 	
-	voltage.integer = 110;
-	voltage.decimal = 0;
+	Voltage.value_integer = 110;
+	Voltage.value_decimal = 0;
 	
-	current.integer = 13;
-	current.decimal = 94;
+	Current.value_integer = 13;
+	Current.value_decimal = 94;
 	
-	power.integer = 1533;
-	power.decimal = 4;
+	Power.value_integer = 1533;
+	Power.value_decimal = 4;
 	
-	consumption.integer = 8549;
-	consumption.decimal = 0;
+	Consumption.value_integer = 8549;
+	Consumption.value_decimal = 0;
 	
-	lcd_value_send(pz_lcd, LCD_PZ_VOLTAGE, &voltage);
-	lcd_value_send(pz_lcd, LCD_PZ_CURRENT, &current);
-	lcd_value_send(pz_lcd, LCD_PZ_POWER, &power);
-	lcd_value_send(pz_lcd, LCD_PZ_CONSUMPTION, &consumption);
+	lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
+	lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
+	lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
+	lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
 	
 	while(1) {
 	}
