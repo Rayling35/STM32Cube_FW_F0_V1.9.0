@@ -6,9 +6,9 @@
 
 
 struct rn8209g_data {
-	struct device *spi;
-	struct device *gpio;
-	uint8_t rn8209g_rx[3];
+	struct device *Spi;
+	struct device *Gpio;
+	uint8_t value_rn8209g_rx[3];
 };
 
 //SPI_POLARITY_LOW,SPI_PHASE_2EDGE
