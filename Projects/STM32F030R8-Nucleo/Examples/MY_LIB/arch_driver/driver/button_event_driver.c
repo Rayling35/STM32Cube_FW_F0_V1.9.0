@@ -13,18 +13,17 @@
 static uint32_t get_press_time_data(struct device *Dev)
 {
 	struct button_event_data *D_data = Dev->data;
-	struct device *Gpio = D_data->Gpio_c13;
 	static uint32_t start_press_time = 0;
 	
 	if(start_press_time == 0) {
 		start_press_time = osKernelSysTick();
 	}
 	
-	if(gpio_read(Gpio) != D_data->value_pin_original_status) {
+	if(gpio_read(D_data->Gpio_c13) != D_data->value_pin_original_status) {
 		return (osKernelSysTick() - start_press_time);
 	}
 	
-	if(gpio_read(Gpio) == D_data->value_pin_original_status) {
+	if(gpio_read(D_data->Gpio_c13) == D_data->value_pin_original_status) {
 		start_press_time = 0;
 	}
 	

@@ -31,11 +31,10 @@ static int max31855_value_get(struct device *Dev, enum sensor_type e_type, struc
 static int max31855_sample_fetch(struct device *Dev, enum sensor_type e_type)
 {
 	struct max31855_data *D_data = Dev->data;
-	struct device *Spi = D_data->Spi;
 	int ret;
 	uint32_t data;
 	
-	ret = spi_receive32(Spi, &data, 1);
+	ret = spi_receive32(D_data->Spi, &data, 1);
 	D_data->value_t1 = data >> 20;                //12 bit
 	D_data->value_t2 = (data >> 18) & 0x00000003; //2 bit
 	D_data->value_j1 = (data >> 8) & 0x000000FF;  //8 bit
@@ -51,7 +50,7 @@ static const struct sensor_common_api Max31855_api = {
 
 static struct max31855_data Max31855_data;
 
-static int max31855_dev_init(struct device *Dev)
+static int max31855_device_init(struct device *Dev)
 {
 	struct max31855_data *D_data = Dev->data;
 	
@@ -65,7 +64,7 @@ static int max31855_dev_init(struct device *Dev)
 struct device Max31855 = {
 	.api  = &Max31855_api,
 	.data = &Max31855_data,
-	.init = max31855_dev_init,
+	.init = max31855_device_init,
 };
 
 struct device* max31855_device_binding(void)

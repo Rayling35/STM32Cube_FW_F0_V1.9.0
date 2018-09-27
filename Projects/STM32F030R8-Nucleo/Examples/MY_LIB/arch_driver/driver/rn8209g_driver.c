@@ -60,7 +60,7 @@ static const struct sensor_common_api Rn8209g_api = {
 
 static struct rn8209g_data Rn8209g_data;
 
-static int rn8209g_dev_init(struct device *Dev)
+static int rn8209g_device_init(struct device *Dev)
 {
 	struct rn8209g_data *D_data = Dev->data;
 	
@@ -76,7 +76,7 @@ static int rn8209g_dev_init(struct device *Dev)
 struct device Rn8209g = {
 	.api  = &Rn8209g_api,
 	.data = &Rn8209g_data,
-	.init = rn8209g_dev_init,
+	.init = rn8209g_device_init,
 };
 
 struct device* rn8209g_device_binding(void)

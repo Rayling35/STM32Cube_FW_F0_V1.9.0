@@ -62,7 +62,7 @@ static const struct spi_config Spi1_cs0_config = {
 	.value_tx_rx_timeout = 100,
 };
 
-static int spi1_cs0_dev_init(struct device *Dev)
+static int spi1_cs0_device_init(struct device *Dev)
 {
 	struct spi_data *D_data = Dev->data;
 	
@@ -77,7 +77,7 @@ struct device Spi_1_cs0 = {
 	.api    = &Spi_common_api,
 	.data   = &Spi1_cs0_data,
 	.config = &Spi1_cs0_config,
-	.init   = spi1_cs0_dev_init,
+	.init   = spi1_cs0_device_init,
 };
 
 struct device* spi1_cs0_device_binding(void)
@@ -96,7 +96,7 @@ static const struct spi_config Spi2_cs0_config = {
 	.value_tx_rx_timeout = 100,
 };
 
-static int spi2_cs0_dev_init(struct device *Dev)
+static int spi2_cs0_device_init(struct device *Dev)
 {
 	struct spi_data *D_data = Dev->data;
 	
@@ -111,7 +111,7 @@ struct device Spi_2_cs0 = {
 	.api    = &Spi_common_api,
 	.data   = &Spi2_cs0_data,
 	.config = &Spi2_cs0_config,
-	.init   = spi2_cs0_dev_init,
+	.init   = spi2_cs0_device_init,
 };
 
 struct device* spi2_cs0_device_binding(void)
