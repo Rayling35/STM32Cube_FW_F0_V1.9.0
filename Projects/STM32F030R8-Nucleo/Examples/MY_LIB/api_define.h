@@ -96,5 +96,22 @@ struct spi_api {
 };
 #endif
 
+#ifdef HAL_TIM_MODULE_ENABLED
+struct pwm_api {
+	void (*init)  (void);
+	int (*pin_set)(uint32_t period_cycles, uint32_t pulse_cycles, uint32_t prescaler);
+};
+
+struct timer_api {
+	void (*init)          (void);
+	int (*timer_start)    (uint32_t period_cycles, uint32_t prescaler);
+	int (*timer_stop)     (void);
+	int (*timer_start_it) (uint32_t period_cycles, uint32_t prescaler);
+	int (*timer_stop_it)  (void);
+	int (*timer_start_dma)(uint32_t period_cycles, uint32_t prescaler);
+	int (*timer_stop_dma) (void);
+};
+#endif
+
 
 #endif

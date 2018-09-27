@@ -13,7 +13,7 @@
 
 static int read_data(struct device *Dev)
 {
-	struct gpio_data *D_data  = Dev->data;
+	struct gpio_data *D_data = Dev->data;
 	struct gpio_api *Gpio_hal = D_data->Gpio_hal;
 	
 	return Gpio_hal->read();
@@ -21,7 +21,7 @@ static int read_data(struct device *Dev)
 
 static void write_data(struct device *Dev, uint16_t state)
 {
-	struct gpio_data *D_data  = Dev->data;
+	struct gpio_data *D_data = Dev->data;
 	struct gpio_api *Gpio_hal = D_data->Gpio_hal;
 	
 	Gpio_hal->write(state);
@@ -29,7 +29,7 @@ static void write_data(struct device *Dev, uint16_t state)
 
 static void toggle_write_data(struct device *Dev)
 {
-	struct gpio_data *D_data  = Dev->data;
+	struct gpio_data *D_data = Dev->data;
 	struct gpio_api *Gpio_hal = D_data->Gpio_hal;
 	
 	Gpio_hal->toggle_write();
@@ -38,7 +38,7 @@ static void toggle_write_data(struct device *Dev)
 #ifdef RTOS_ON
 static uint32_t press_time_data(struct device *Dev, enum count_unit e_unit)
 {
-	struct gpio_data *D_data  = Dev->data;
+	struct gpio_data *D_data = Dev->data;
 	struct gpio_api *Gpio_hal = D_data->Gpio_hal;
 	int no_press_status;
 	uint32_t count;

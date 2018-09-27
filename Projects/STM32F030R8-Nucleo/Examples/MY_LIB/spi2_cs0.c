@@ -166,7 +166,7 @@ static int spi2_cs0_transmit_receive_dma(uint8_t *tx_data, uint8_t *rx_data, uin
 #endif
 #endif
 
-static struct spi_api spi2_cs0_api = {
+static struct spi_api Spi2_cs0_api = {
 	.init                 = spi2_cs0_init,
 	.transmit             = spi2_cs0_transmit,
 	.receive              = spi2_cs0_receive,
@@ -186,5 +186,5 @@ static struct spi_api spi2_cs0_api = {
 
 struct spi_api* spi2_cs0_binding(void)
 {
-	return &spi2_cs0_api; //傳遞位置
+	return &Spi2_cs0_api; //傳遞位置
 }

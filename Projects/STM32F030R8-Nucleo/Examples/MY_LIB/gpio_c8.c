@@ -101,7 +101,7 @@ static int gpio_c8_lock(void)
 	return HAL_GPIO_LockPin(PC8_PORT, PC8_PIN);
 }
 
-static struct gpio_api gpio_c8_api = {
+static struct gpio_api Gpio_c8_api = {
 	.init         = gpio_c8_init,
 	.read         = gpio_c8_read,
 	.write        = gpio_c8_write,
@@ -111,5 +111,5 @@ static struct gpio_api gpio_c8_api = {
 
 struct gpio_api* gpio_c8_binding(void)
 {
-	return &gpio_c8_api;
+	return &Gpio_c8_api;
 }

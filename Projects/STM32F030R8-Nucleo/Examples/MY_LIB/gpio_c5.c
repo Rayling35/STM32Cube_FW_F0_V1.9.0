@@ -101,7 +101,7 @@ static int gpio_c5_lock(void)
 	return HAL_GPIO_LockPin(PC5_PORT, PC5_PIN);
 }
 
-static struct gpio_api gpio_c5_api = {
+static struct gpio_api Gpio_c5_api = {
 	.init         = gpio_c5_init,
 	.read         = gpio_c5_read,
 	.write        = gpio_c5_write,
@@ -111,5 +111,5 @@ static struct gpio_api gpio_c5_api = {
 
 struct gpio_api* gpio_c5_binding(void)
 {
-	return &gpio_c5_api;
+	return &Gpio_c5_api;
 }
