@@ -29,17 +29,18 @@ int main(void)
 	lcd_clean_all(Pz_lcd);
 	HAL_Delay(500);
 	
-	Voltage.value_integer = 110;
-	Voltage.value_decimal = 0;
+	Voltage.value_integer = 9;
+	Voltage.value_decimal = 43;
 	
-	Current.value_integer = 13;
-	Current.value_decimal = 94;
+	Current.value_integer = 0;
+	Current.value_decimal = 2;
 	
-	Power.value_integer = 1533;
-	Power.value_decimal = 4;
+	Power.value_integer = 0;
+	Power.value_decimal = 5;
+	Power.flag_kilo = 1;
 	
-	Consumption.value_integer = 8549;
-	Consumption.value_decimal = 0;
+	Consumption.value_integer = 2;
+	Consumption.flag_kilo = 0;
 	
 	lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
 	lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);

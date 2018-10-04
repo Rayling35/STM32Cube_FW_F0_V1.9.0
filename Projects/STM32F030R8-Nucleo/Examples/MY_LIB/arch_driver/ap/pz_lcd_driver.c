@@ -10,7 +10,7 @@
 
 
 //abcdefg
-const uint8_t seg_no[10][7] = {
+const uint8_t seg_no[11][7] = {
 	{1,1,1,1,1,1,0}, //0 *(seg_no+0)+0, *(seg_no+0)+1, ....
 	{0,1,1,0,0,0,0}, //1 *(seg_no+1)+0, *(seg_no+1)+1, ....
 	{1,1,0,1,1,0,1}, //2 *(seg_no+2)+0, *(seg_no+2)+1, ....
@@ -21,6 +21,7 @@ const uint8_t seg_no[10][7] = {
 	{1,1,1,0,0,0,0}, //7   seg_no[7]+0,   seg_no[7]+1, ....
 	{1,1,1,1,1,1,1}, //8   seg_no[8]+0,   seg_no[8]+1, ....
 	{1,1,1,1,0,1,1}, //9   seg_no[9]+0,   seg_no[9]+1, ....
+	{0,0,0,0,0,0,0}, //" "
 };
 
 static void seg7(struct device *Dev, uint16_t select, uint8_t a, uint8_t b, uint8_t c,
@@ -48,35 +49,163 @@ static void seg_show(struct device *Dev, uint16_t addr, uint8_t *number, uint16_
 	seg7(Dev,addr,number[0],number[1],number[2],number[3],number[4],number[5],number[6],function);
 }
 
-static void consumption_display(struct device *Dev, struct lcd_value *Value)
+static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_value *Value)
 {
-	seg_show(Dev, 24, (uint8_t *)seg_no[(Value->value_integer % 10000) / 1000], 1);
-	seg_show(Dev, 26, (uint8_t *)seg_no[(Value->value_integer % 1000) / 100], 0);
-	seg_show(Dev, 28, (uint8_t *)seg_no[(Value->value_integer % 100) / 10], 1);
-	seg_show(Dev, 30, (uint8_t *)seg_no[(Value->value_integer % 10) / 1], 0);
-}
+	static uint32_t voltage[4];
+	static uint32_t current[4];
+	static uint32_t power[4];
+	static uint32_t energy[4];
+	static uint8_t voltage_text, voltage_dot, voltage_V;
+	static uint8_t current_text, current_dot, current_A;
+	static uint8_t power_text, power_dot, power_k, power_W;
+	static uint8_t energy_text, energy_k, energy_Wh;
+	
+	switch (e_type) {
+		case LCD_PZ_VOLTAGE:
+			if(Value->value_integer > 99) {
+				voltage_text = 1;
+				voltage_dot = 0;
+				voltage_V = 1;
+				if(Value->value_integer < 1000) {
+					voltage[3] = 10; //no display number
+				}else {
+					voltage[3] = (Value->value_integer % 10000) / 1000;
+				}
+				voltage[2] = (Value->value_integer % 1000) / 100;
+				voltage[1] = (Value->value_integer % 100) / 10;
+				voltage[0] = Value->value_integer % 10;
+			}else {
+				voltage_text = 1;
+				voltage_dot = 1;
+				voltage_V = 1;
+				if(Value->value_integer < 10) {
+					voltage[3] = 10; //no display number
+				}else {
+					voltage[3] = (Value->value_integer % 100) / 10;
+				}
+				voltage[2] = Value->value_integer % 10;
+				if(Value->value_decimal > 9) {
+					voltage[1] = (Value->value_decimal % 100) / 10;
+					voltage[0] = Value->value_decimal % 10;
+				} else {
+					voltage[1] = Value->value_decimal;
+					voltage[0] = 10; //no display number
+				}
+			}
+			break;
+			
+		case LCD_PZ_CURRENT:
+			if(Value->value_integer > 99) {
+				current_text = 1;
+				current_dot = 0;
+				current_A = 1;
+				if(Value->value_integer < 1000) {
+					current[3] = 10; //no display number
+				}else {
+					current[3] = (Value->value_integer % 10000) / 1000;
+				}
+				current[2] = (Value->value_integer % 1000) / 100;
+				current[1] = (Value->value_integer % 100) / 10;
+				current[0] = Value->value_integer % 10;
+			}else {
+				current_text = 1;
+				current_dot = 1;
+				current_A = 1;
+				if(Value->value_integer < 10) {
+					current[3] = 10; //no display number
+				}else {
+					current[3] = (Value->value_integer % 100) / 10;
+				}
+				current[2] = Value->value_integer % 10;
+				if(Value->value_decimal > 9) {
+					current[1] = (Value->value_decimal % 100) / 10;
+					current[0] = Value->value_decimal % 10;
+				} else {
+					current[1] = Value->value_decimal;
+					current[0] = 10; //no display number
+				}
+			}
+			break;
+			
+		case LCD_PZ_POWER:
+				power[3] = (Value->value_integer % 10000) / 1000;
+				power[2] = (Value->value_integer % 1000) / 100;
+				power[1] = (Value->value_integer % 100) / 10;
+				power[0] = Value->value_integer % 10;
+			if(Value->value_integer > 999) {
+				power_text = 1;
+				power_dot = 0;
+				power_k = Value->flag_kilo;
+				power_W = 1;
+				power[3] = (Value->value_integer % 10000) / 1000;
+				power[2] = (Value->value_integer % 1000) / 100;
+				power[1] = (Value->value_integer % 100) / 10;
+				power[0] = Value->value_integer % 10;
+			}else {
+				power_text = 1;
+				power_dot = 1;
+				power_k = Value->flag_kilo;
+				power_W = 1;
+				if(Value->value_integer < 100) {
+					power[3] = 10; //no display number
+				}else {
+					power[3] = (Value->value_integer % 1000) / 100;
+				}
+				if(Value->value_integer < 10) {
+					power[2] = 10; //no display number
+				}else {
+					power[2] = (Value->value_integer % 100) / 10;
+				}
+				power[1] = Value->value_integer % 10;
+				power[0] = Value->value_decimal % 10;
+			}
+			break;
+			
+		case LCD_PZ_CONSUMPTION:
+			energy_text = 1;
+			energy_k = Value->flag_kilo;
+			energy_Wh = 1;
+			if(Value->value_integer < 1000) {
+				energy[3] = 10; //no display number
+			}else {
+				energy[3] = (Value->value_integer % 10000) / 1000;
+			}
+			if(Value->value_integer < 100) {
+				energy[2] = 10; //no display number
+			}else {
+				energy[2] = (Value->value_integer % 1000) / 100;
+			}
+			if(Value->value_integer < 10) {
+				energy[1] = 10; //no display number
+			}else {
+				energy[1] = (Value->value_integer % 100) / 10;
+			}
+			energy[0] = Value->value_integer % 10;
+			break;
+			
+		default:
+			break;
+	}
+	
+	seg_show(Dev,  0, (uint8_t *)seg_no[voltage[3]], voltage_text);
+	seg_show(Dev,  2, (uint8_t *)seg_no[voltage[2]], voltage_dot);
+	seg_show(Dev,  4, (uint8_t *)seg_no[voltage[1]], 0);
+	seg_show(Dev,  6, (uint8_t *)seg_no[voltage[0]], voltage_V);
 
-static void power_display(struct device *Dev, struct lcd_value *Value)
-{
-	seg_show(Dev, 16, (uint8_t *)seg_no[6], 1);
-	seg_show(Dev, 18, (uint8_t *)seg_no[5], 1);
-	seg_show(Dev, 20, (uint8_t *)seg_no[4], 0);
-	seg_show(Dev, 22, (uint8_t *)seg_no[3], 0);
-}
+	seg_show(Dev,  8, (uint8_t *)seg_no[current[3]], current_text);
+	seg_show(Dev, 10, (uint8_t *)seg_no[current[2]], current_dot);
+	seg_show(Dev, 12, (uint8_t *)seg_no[current[1]], 0);
+	seg_show(Dev, 14, (uint8_t *)seg_no[current[0]], current_A);
 
-static void current_display(struct device *Dev, struct lcd_value *Value)
-{
-	seg_show(Dev, 8,  (uint8_t *)seg_no[8], 1);
-	seg_show(Dev, 10, (uint8_t *)seg_no[9], 1);
-	seg_show(Dev, 12, (uint8_t *)seg_no[0], 1);
-	seg_show(Dev, 14, (uint8_t *)seg_no[1], 1);
-}
+	seg_show(Dev, 16, (uint8_t *)seg_no[power[3]], 0);
+	seg_show(Dev, 18, (uint8_t *)seg_no[power[2]], power_text);
+	seg_show(Dev, 20, (uint8_t *)seg_no[power[1]], power_dot);
+	seg_show(Dev, 22, (uint8_t *)seg_no[power[0]], energy_text);
 
-static void voltage_display(struct device *Dev, struct lcd_value *Value)
-{
-	seg_show(Dev, 2, (uint8_t *)seg_no[(Value->value_integer % 1000) / 100], 0);
-	seg_show(Dev, 4, (uint8_t *)seg_no[(Value->value_integer % 100) / 10], 1);
-	seg_show(Dev, 6, (uint8_t *)seg_no[(Value->value_integer % 10) / 1], 1);
+	seg_show(Dev, 24, (uint8_t *)seg_no[energy[3]], power_W);
+	seg_show(Dev, 26, (uint8_t *)seg_no[energy[2]], power_k);
+	seg_show(Dev, 28, (uint8_t *)seg_no[energy[1]], energy_Wh);
+	seg_show(Dev, 30, (uint8_t *)seg_no[energy[0]], energy_k);
 }
 
 static int pz_lcd_value_send(struct device *Dev, enum lcd_type e_type, struct lcd_value *Value)
@@ -96,16 +225,10 @@ static int pz_lcd_value_send(struct device *Dev, enum lcd_type e_type, struct lc
 			}
 			break;
 		case LCD_PZ_VOLTAGE:
-			voltage_display(Dev, Value);
-			break;
 		case LCD_PZ_CURRENT:
-			current_display(Dev, Value);
-			break;
 		case LCD_PZ_POWER:
-			power_display(Dev, Value);
-			break;
 		case LCD_PZ_CONSUMPTION:
-			consumption_display(Dev, Value);
+			display_update(Dev, e_type, Value);
 			break;
 		default:
 			return -1;
