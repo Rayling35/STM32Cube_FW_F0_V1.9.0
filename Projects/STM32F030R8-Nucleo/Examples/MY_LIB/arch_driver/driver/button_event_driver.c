@@ -30,49 +30,49 @@ static uint32_t get_press_time_data(struct device *Dev)
 	return 0;
 }
 
-static int get_push_status_data(struct device *Dev, struct button_status *Status)
+static int get_press_status_data(struct device *Dev, struct button_status *Status)
 {
 	uint32_t seconds = get_press_time_data(Dev);
 	
 	if(seconds > 0) {
-		Status->flag_push = 1;
+		Status->flag_button_press = 1;
 	}else {
-		Status->flag_push = 0;
+		Status->flag_button_press = 0;
 	}
-	if(seconds > 3000) {
-		Status->flag_press_3_second = 1;
+	if(seconds >= 3000 && seconds < 5000) {
+		Status->flag_button_press_3_second = 1;
 	}else {
-		Status->flag_press_3_second = 0;
+		Status->flag_button_press_3_second = 0;
 	}
-	if(seconds > 5000) {
-		Status->flag_press_5_second = 1;
+	if(seconds >=5000 && seconds < 8000) {
+		Status->flag_button_press_5_second = 1;
 	}else {
-		Status->flag_press_5_second = 0;
+		Status->flag_button_press_5_second = 0;
 	}
-	if(seconds > 8000) {
-		Status->flag_press_8_second = 1;
+	if(seconds >=8000 && seconds < 10000) {
+		Status->flag_button_press_8_second = 1;
 	}else {
-		Status->flag_press_8_second = 0;
+		Status->flag_button_press_8_second = 0;
 	}
-	if(seconds > 10000) {
-		Status->flag_press_10_second = 1;
+	if(seconds >=10000 && seconds < 15000) {
+		Status->flag_button_press_10_second = 1;
 	}else {
-		Status->flag_press_10_second = 0;
+		Status->flag_button_press_10_second = 0;
 	}
-	if(seconds > 15000) {
-		Status->flag_press_15_second = 1;
+	if(seconds >=15000 && seconds < 20000) {
+		Status->flag_button_press_15_second = 1;
 	}else {
-		Status->flag_press_15_second = 0;
+		Status->flag_button_press_15_second = 0;
 	}
-	if(seconds > 20000) {
-		Status->flag_press_20_second = 1;
+	if(seconds >=20000 && seconds < 30000) {
+		Status->flag_button_press_20_second = 1;
 	}else {
-		Status->flag_press_20_second = 0;
+		Status->flag_button_press_20_second = 0;
 	}
-	if(seconds > 30000) {
-		Status->flag_press_30_second = 1;
+	if(seconds >=30000) {
+		Status->flag_button_press_30_second = 1;
 	}else {
-		Status->flag_press_30_second = 0;
+		Status->flag_button_press_30_second = 0;
 	}
 	
 	return 0;
@@ -80,7 +80,7 @@ static int get_push_status_data(struct device *Dev, struct button_status *Status
 
 static const struct button_event_common_api Button_event_api = {
 	.get_press_time = get_press_time_data,
-	.get_push_status = get_push_status_data,
+	.get_press_status = get_press_status_data,
 };
 
 static struct button_event_data Button_event_data;
