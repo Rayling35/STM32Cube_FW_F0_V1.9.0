@@ -25,28 +25,45 @@ int main(void)
 	printf("All device init finish\r\n");
 	
 	lcd_set_all(Pz_lcd);
-	HAL_Delay(500);
 	lcd_clean_all(Pz_lcd);
-	HAL_Delay(500);
-	
-	Voltage.value_integer = 9;
-	Voltage.value_decimal = 43;
-	
-	Current.value_integer = 0;
-	Current.value_decimal = 2;
-	
-	Power.value_integer = 0;
-	Power.value_decimal = 5;
-	Power.flag_kilo = 1;
-	
-	Consumption.value_integer = 2;
-	Consumption.flag_kilo = 0;
-	
-	lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
-	lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
-	lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
-	lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
 	
 	while(1) {
+		Voltage.value_integer = 10010;
+		Voltage.value_decimal = 93;
+		
+		Current.value_integer = 10010;
+		Current.value_decimal = 93;
+		
+		Power.value_integer = 10010;
+		Power.value_decimal = 9;
+		Power.flag_symbol_K = 1;
+		
+		Consumption.value_integer = 10010;
+		Consumption.flag_symbol_K = 0;
+		
+		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
+		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
+		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
+		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
+		HAL_Delay(2000);
+		
+		Voltage.value_integer = 10;
+		Voltage.value_decimal = 00;
+		
+		Current.value_integer = 100;
+		Current.value_decimal = 00;
+		
+		Power.value_integer = 10;
+		Power.value_decimal = 0;
+		Power.flag_symbol_K = 0;
+		
+		Consumption.value_integer = 10;
+		Consumption.flag_symbol_K = 1;
+		
+		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
+		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
+		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
+		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
+		HAL_Delay(2000);
 	}
 }

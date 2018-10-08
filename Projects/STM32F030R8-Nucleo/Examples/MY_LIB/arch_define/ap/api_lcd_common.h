@@ -8,7 +8,7 @@
 struct lcd_value {
 	uint32_t value_integer;
 	uint32_t value_decimal;
-	uint8_t flag_kilo;
+	uint8_t flag_symbol_K;
 };
 
 enum lcd_type {

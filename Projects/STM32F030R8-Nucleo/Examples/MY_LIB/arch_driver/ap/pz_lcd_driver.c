@@ -55,17 +55,25 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 	static uint32_t current[4];
 	static uint32_t power[4];
 	static uint32_t energy[4];
-	static uint8_t voltage_text, voltage_dot, voltage_V;
-	static uint8_t current_text, current_dot, current_A;
-	static uint8_t power_text, power_dot, power_k, power_W;
-	static uint8_t energy_text, energy_k, energy_Wh;
+	static uint8_t voltage_dot;
+	static uint8_t current_dot;
+	static uint8_t power_dot;
+	static uint8_t power_K;
+	static uint8_t energy_K;
+	
+	uint8_t voltage_text = 1;
+	uint8_t voltage_V = 1;
+	uint8_t current_text = 1;
+	uint8_t current_A = 1;
+	uint8_t power_text = 1;
+	uint8_t power_W = 1;
+	uint8_t energy_text = 1;
+	uint8_t energy_Wh = 1;
 	
 	switch (e_type) {
 		case LCD_PZ_VOLTAGE:
 			if(Value->value_integer > 99) {
-				voltage_text = 1;
 				voltage_dot = 0;
-				voltage_V = 1;
 				if(Value->value_integer < 1000) {
 					voltage[3] = 10; //no display number
 				}else {
@@ -75,9 +83,7 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				voltage[1] = (Value->value_integer % 100) / 10;
 				voltage[0] = Value->value_integer % 10;
 			}else {
-				voltage_text = 1;
 				voltage_dot = 1;
-				voltage_V = 1;
 				if(Value->value_integer < 10) {
 					voltage[3] = 10; //no display number
 				}else {
@@ -96,9 +102,7 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 			
 		case LCD_PZ_CURRENT:
 			if(Value->value_integer > 99) {
-				current_text = 1;
 				current_dot = 0;
-				current_A = 1;
 				if(Value->value_integer < 1000) {
 					current[3] = 10; //no display number
 				}else {
@@ -108,9 +112,7 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				current[1] = (Value->value_integer % 100) / 10;
 				current[0] = Value->value_integer % 10;
 			}else {
-				current_text = 1;
 				current_dot = 1;
-				current_A = 1;
 				if(Value->value_integer < 10) {
 					current[3] = 10; //no display number
 				}else {
@@ -128,24 +130,15 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 			break;
 			
 		case LCD_PZ_POWER:
-				power[3] = (Value->value_integer % 10000) / 1000;
-				power[2] = (Value->value_integer % 1000) / 100;
-				power[1] = (Value->value_integer % 100) / 10;
-				power[0] = Value->value_integer % 10;
+				power_K = Value->flag_symbol_K;
 			if(Value->value_integer > 999) {
-				power_text = 1;
 				power_dot = 0;
-				power_k = Value->flag_kilo;
-				power_W = 1;
 				power[3] = (Value->value_integer % 10000) / 1000;
 				power[2] = (Value->value_integer % 1000) / 100;
 				power[1] = (Value->value_integer % 100) / 10;
 				power[0] = Value->value_integer % 10;
 			}else {
-				power_text = 1;
 				power_dot = 1;
-				power_k = Value->flag_kilo;
-				power_W = 1;
 				if(Value->value_integer < 100) {
 					power[3] = 10; //no display number
 				}else {
@@ -162,9 +155,7 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 			break;
 			
 		case LCD_PZ_CONSUMPTION:
-			energy_text = 1;
-			energy_k = Value->flag_kilo;
-			energy_Wh = 1;
+			energy_K = Value->flag_symbol_K;
 			if(Value->value_integer < 1000) {
 				energy[3] = 10; //no display number
 			}else {
@@ -203,9 +194,9 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 	seg_show(Dev, 22, (uint8_t *)seg_no[power[0]], energy_text);
 
 	seg_show(Dev, 24, (uint8_t *)seg_no[energy[3]], power_W);
-	seg_show(Dev, 26, (uint8_t *)seg_no[energy[2]], power_k);
+	seg_show(Dev, 26, (uint8_t *)seg_no[energy[2]], power_K);
 	seg_show(Dev, 28, (uint8_t *)seg_no[energy[1]], energy_Wh);
-	seg_show(Dev, 30, (uint8_t *)seg_no[energy[0]], energy_k);
+	seg_show(Dev, 30, (uint8_t *)seg_no[energy[0]], energy_K);
 }
 
 static int pz_lcd_value_send(struct device *Dev, enum lcd_type e_type, struct lcd_value *Value)
@@ -217,11 +208,13 @@ static int pz_lcd_value_send(struct device *Dev, enum lcd_type e_type, struct lc
 		case LCD_SET_ALL:
 			for(i = 0; i < 0x3F; i++) {                   //A5~A0: 00111111
 				seg7_write_data_4(D_data->Ht1621, i, 0x0F); //D3~D0: 00001111 set 1
+				HAL_Delay(1);
 			}
 			break;
 		case LCD_CLEAN_ALL:
 			for(i = 0; i < 0x3F; i++) {                   //A5~A0: 00111111
 				seg7_write_data_4(D_data->Ht1621, i, 0x00); //D3~D0: 00001111 set 0
+				HAL_Delay(1);
 			}
 			break;
 		case LCD_PZ_VOLTAGE:
