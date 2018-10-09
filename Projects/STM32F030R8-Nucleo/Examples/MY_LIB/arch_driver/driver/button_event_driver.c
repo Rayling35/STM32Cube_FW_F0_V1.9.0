@@ -39,40 +39,105 @@ static int get_press_status_data(struct device *Dev, struct button_status *Statu
 	}else {
 		Status->flag_button_press = 0;
 	}
-	if(seconds >= 3000 && seconds < 5000) {
+	if(seconds >= 1000 && seconds < 2000) {
+		Status->flag_button_press_1_second = 1;
+	}else {
+		Status->flag_button_press_1_second = 0;
+	}
+	if(seconds >= 2000 && seconds < 3000) {
+		Status->flag_button_press_2_second = 1;
+	}else {
+		Status->flag_button_press_2_second = 0;
+	}
+	if(seconds >= 3000 && seconds < 4000) {
 		Status->flag_button_press_3_second = 1;
 	}else {
 		Status->flag_button_press_3_second = 0;
 	}
-	if(seconds >=5000 && seconds < 8000) {
+	if(seconds >=4000 && seconds < 5000) {
+		Status->flag_button_press_4_second = 1;
+	}else {
+		Status->flag_button_press_4_second = 0;
+	}
+	if(seconds >=5000 && seconds < 6000) {
 		Status->flag_button_press_5_second = 1;
 	}else {
 		Status->flag_button_press_5_second = 0;
 	}
-	if(seconds >=8000 && seconds < 10000) {
+	if(seconds >=6000 && seconds < 7000) {
+		Status->flag_button_press_6_second = 1;
+	}else {
+		Status->flag_button_press_6_second = 0;
+	}
+	if(seconds >=7000 && seconds < 8000) {
+		Status->flag_button_press_7_second = 1;
+	}else {
+		Status->flag_button_press_7_second = 0;
+	}
+	if(seconds >=8000 && seconds < 9000) {
 		Status->flag_button_press_8_second = 1;
 	}else {
 		Status->flag_button_press_8_second = 0;
 	}
-	if(seconds >=10000 && seconds < 15000) {
+	if(seconds >=9000 && seconds < 10000) {
+		Status->flag_button_press_9_second = 1;
+	}else {
+		Status->flag_button_press_9_second = 0;
+	}
+	if(seconds >=10000 && seconds < 11000) {
 		Status->flag_button_press_10_second = 1;
 	}else {
 		Status->flag_button_press_10_second = 0;
 	}
-	if(seconds >=15000 && seconds < 20000) {
+	if(seconds >=11000 && seconds < 12000) {
+		Status->flag_button_press_11_second = 1;
+	}else {
+		Status->flag_button_press_11_second = 0;
+	}
+	if(seconds >=12000 && seconds < 13000) {
+		Status->flag_button_press_12_second = 1;
+	}else {
+		Status->flag_button_press_12_second = 0;
+	}
+	if(seconds >=13000 && seconds < 14000) {
+		Status->flag_button_press_13_second = 1;
+	}else {
+		Status->flag_button_press_13_second = 0;
+	}
+	if(seconds >=14000 && seconds < 15000) {
+		Status->flag_button_press_14_second = 1;
+	}else {
+		Status->flag_button_press_14_second = 0;
+	}
+	if(seconds >=15000 && seconds < 16000) {
 		Status->flag_button_press_15_second = 1;
 	}else {
 		Status->flag_button_press_15_second = 0;
 	}
-	if(seconds >=20000 && seconds < 30000) {
+	if(seconds >=16000 && seconds < 17000) {
+		Status->flag_button_press_16_second = 1;
+	}else {
+		Status->flag_button_press_16_second = 0;
+	}
+	if(seconds >=17000 && seconds < 18000) {
+		Status->flag_button_press_17_second = 1;
+	}else {
+		Status->flag_button_press_17_second = 0;
+	}
+	if(seconds >=18000 && seconds < 19000) {
+		Status->flag_button_press_18_second = 1;
+	}else {
+		Status->flag_button_press_18_second = 0;
+	}
+	if(seconds >=19000 && seconds < 20000) {
+		Status->flag_button_press_19_second = 1;
+	}else {
+		Status->flag_button_press_19_second = 0;
+	}
+	if(seconds >=20000 && seconds < 21000) {
 		Status->flag_button_press_20_second = 1;
 	}else {
 		Status->flag_button_press_20_second = 0;
-	}
-	if(seconds >=30000) {
-		Status->flag_button_press_30_second = 1;
-	}else {
-		Status->flag_button_press_30_second = 0;
 	}
 	
 	return 0;

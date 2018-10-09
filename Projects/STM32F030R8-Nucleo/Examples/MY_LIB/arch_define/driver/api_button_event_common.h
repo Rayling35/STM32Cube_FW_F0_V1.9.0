@@ -7,13 +7,26 @@
 
 struct button_status {
 	uint8_t flag_button_press;
+	uint8_t flag_button_press_1_second;
+	uint8_t flag_button_press_2_second;
 	uint8_t flag_button_press_3_second;
+	uint8_t flag_button_press_4_second;
 	uint8_t flag_button_press_5_second;
+	uint8_t flag_button_press_6_second;
+	uint8_t flag_button_press_7_second;
 	uint8_t flag_button_press_8_second;
+	uint8_t flag_button_press_9_second;
 	uint8_t flag_button_press_10_second;
+	uint8_t flag_button_press_11_second;
+	uint8_t flag_button_press_12_second;
+	uint8_t flag_button_press_13_second;
+	uint8_t flag_button_press_14_second;
 	uint8_t flag_button_press_15_second;
+	uint8_t flag_button_press_16_second;
+	uint8_t flag_button_press_17_second;
+	uint8_t flag_button_press_18_second;
+	uint8_t flag_button_press_19_second;
 	uint8_t flag_button_press_20_second;
-	uint8_t flag_button_press_30_second;
 };
 
                /*-----------API--------------*/
