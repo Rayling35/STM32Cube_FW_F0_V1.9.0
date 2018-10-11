@@ -5,10 +5,18 @@
 #define __API_LCD_COMMON_H
 
 
+enum display_level {
+	DISPLAY_NORMAL,
+	DISPLAY_MASK_NUMBER,
+	DISPLAY_MASK_TEXT,
+	DISPLAY_MASK_NUMBER_TEXT,
+};
+
 struct lcd_value {
 	uint32_t value_integer;
 	uint32_t value_decimal;
 	uint8_t flag_symbol_K;
+	enum display_level e_display_level;
 };
 
 enum lcd_type {

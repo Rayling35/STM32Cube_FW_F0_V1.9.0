@@ -49,6 +49,111 @@ static void seg_show(struct device *Dev, uint16_t addr, uint8_t *number, uint16_
 	seg7(Dev,addr,number[0],number[1],number[2],number[3],number[4],number[5],number[6],function);
 }
 
+static void consumption_calculate(uint32_t energy[4], struct lcd_value *Value)
+{
+	if(Value->value_integer < 1000) {
+		energy[3] = 10; //no display number
+	}else {
+		energy[3] = (Value->value_integer % 10000) / 1000;
+	}
+	if(Value->value_integer < 100) {
+		energy[2] = 10; //no display number
+	}else {
+		energy[2] = (Value->value_integer % 1000) / 100;
+	}
+	if(Value->value_integer < 10) {
+		energy[1] = 10; //no display number
+	}else {
+		energy[1] = (Value->value_integer % 100) / 10;
+	}
+	energy[0] = Value->value_integer % 10;
+}
+
+static void power_calculate(uint32_t power[4], uint8_t *dot, struct lcd_value *Value)
+{
+	if(Value->value_integer > 999) {
+		*dot = 0;
+		power[3] = (Value->value_integer % 10000) / 1000;
+		power[2] = (Value->value_integer % 1000) / 100;
+		power[1] = (Value->value_integer % 100) / 10;
+		power[0] = Value->value_integer % 10;
+	}else {
+		*dot = 1;
+		if(Value->value_integer < 100) {
+			power[3] = 10; //no display number
+		}else {
+			power[3] = (Value->value_integer % 1000) / 100;
+		}
+		if(Value->value_integer < 10) {
+			power[2] = 10; //no display number
+		}else {
+			power[2] = (Value->value_integer % 100) / 10;
+		}
+		power[1] = Value->value_integer % 10;
+		power[0] = Value->value_decimal % 10;
+	}
+}
+
+static void current_calculate(uint32_t current[4], uint8_t *dot, struct lcd_value *Value)
+{
+	if(Value->value_integer > 99) {
+		*dot = 0;
+		if(Value->value_integer < 1000) {
+			current[3] = 10; //no display number
+		}else {
+			current[3] = (Value->value_integer % 10000) / 1000;
+		}
+		current[2] = (Value->value_integer % 1000) / 100;
+		current[1] = (Value->value_integer % 100) / 10;
+		current[0] = Value->value_integer % 10;
+	}else {
+		*dot = 1;
+		if(Value->value_integer < 10) {
+			current[3] = 10; //no display number
+		}else {
+			current[3] = (Value->value_integer % 100) / 10;
+		}
+		current[2] = Value->value_integer % 10;
+		if(Value->value_decimal > 9) {
+			current[1] = (Value->value_decimal % 100) / 10;
+			current[0] = Value->value_decimal % 10;
+		}else {
+			current[1] = Value->value_decimal;
+			current[0] = 10; //no display number
+		}
+	}
+}
+
+static void voltage_calculate(uint32_t voltage[4], uint8_t *dot, struct lcd_value *Value)
+{
+	if(Value->value_integer > 99) {
+		*dot = 0;
+		if(Value->value_integer < 1000) {
+			voltage[3] = 10; //no display number
+		}else {
+			voltage[3] = (Value->value_integer % 10000) / 1000;
+		}
+		voltage[2] = (Value->value_integer % 1000) / 100;
+		voltage[1] = (Value->value_integer % 100) / 10;
+		voltage[0] = Value->value_integer % 10;
+	}else {
+		*dot = 1;
+		if(Value->value_integer < 10) {
+			voltage[3] = 10; //no display number
+		}else {
+			voltage[3] = (Value->value_integer % 100) / 10;
+		}
+		voltage[2] = Value->value_integer % 10;
+		if(Value->value_decimal > 9) {
+			voltage[1] = (Value->value_decimal % 100) / 10;
+			voltage[0] = Value->value_decimal % 10;
+		}else {
+			voltage[1] = Value->value_decimal;
+			voltage[0] = 10; //no display number
+		}
+	}
+}
+
 static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_value *Value)
 {
 	static uint32_t voltage[4];
@@ -61,117 +166,132 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 	static uint8_t power_K;
 	static uint8_t energy_K;
 	
-	uint8_t voltage_text = 1;
-	uint8_t voltage_V = 1;
-	uint8_t current_text = 1;
-	uint8_t current_A = 1;
-	uint8_t power_text = 1;
-	uint8_t power_W = 1;
-	uint8_t energy_text = 1;
-	uint8_t energy_Wh = 1;
+	static uint8_t voltage_text;
+	static uint8_t voltage_V;
+	static uint8_t current_text;
+	static uint8_t current_A;
+	static uint8_t power_text;
+	static uint8_t power_W;
+	static uint8_t energy_text;
+	static uint8_t energy_Wh;
 	
 	switch (e_type) {
 		case LCD_PZ_VOLTAGE:
-			if(Value->value_integer > 99) {
+			if(Value->e_display_level == DISPLAY_NORMAL) {
+				voltage_text = 1;
+				voltage_V = 1;
+				voltage_calculate(voltage, &voltage_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+				voltage_text = 1;
+				voltage_V = 1;
+				voltage[0] = 10;
+				voltage[1] = 10;
+				voltage[2] = 10;
+				voltage[3] = 10;
 				voltage_dot = 0;
-				if(Value->value_integer < 1000) {
-					voltage[3] = 10; //no display number
-				}else {
-					voltage[3] = (Value->value_integer % 10000) / 1000;
-				}
-				voltage[2] = (Value->value_integer % 1000) / 100;
-				voltage[1] = (Value->value_integer % 100) / 10;
-				voltage[0] = Value->value_integer % 10;
-			}else {
-				voltage_dot = 1;
-				if(Value->value_integer < 10) {
-					voltage[3] = 10; //no display number
-				}else {
-					voltage[3] = (Value->value_integer % 100) / 10;
-				}
-				voltage[2] = Value->value_integer % 10;
-				if(Value->value_decimal > 9) {
-					voltage[1] = (Value->value_decimal % 100) / 10;
-					voltage[0] = Value->value_decimal % 10;
-				} else {
-					voltage[1] = Value->value_decimal;
-					voltage[0] = 10; //no display number
-				}
+			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+				voltage_text = 0;
+				voltage_V = 0;
+				voltage_calculate(voltage, &voltage_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+				voltage_text = 0;
+				voltage_V = 0;
+				voltage[0] = 10;
+				voltage[1] = 10;
+				voltage[2] = 10;
+				voltage[3] = 10;
+				voltage_dot = 0;
 			}
 			break;
 			
 		case LCD_PZ_CURRENT:
-			if(Value->value_integer > 99) {
+			if(Value->e_display_level == DISPLAY_NORMAL) {
+				current_text = 1;
+				current_A = 1;
+				current_calculate(current, &current_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+				current_text = 1;
+				current_A = 1;
+				current[0] = 10;
+				current[1] = 10;
+				current[2] = 10;
+				current[3] = 10;
 				current_dot = 0;
-				if(Value->value_integer < 1000) {
-					current[3] = 10; //no display number
-				}else {
-					current[3] = (Value->value_integer % 10000) / 1000;
-				}
-				current[2] = (Value->value_integer % 1000) / 100;
-				current[1] = (Value->value_integer % 100) / 10;
-				current[0] = Value->value_integer % 10;
-			}else {
-				current_dot = 1;
-				if(Value->value_integer < 10) {
-					current[3] = 10; //no display number
-				}else {
-					current[3] = (Value->value_integer % 100) / 10;
-				}
-				current[2] = Value->value_integer % 10;
-				if(Value->value_decimal > 9) {
-					current[1] = (Value->value_decimal % 100) / 10;
-					current[0] = Value->value_decimal % 10;
-				} else {
-					current[1] = Value->value_decimal;
-					current[0] = 10; //no display number
-				}
+			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+				current_text = 0;
+				current_A = 0;
+				current_calculate(current, &current_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+				current_text = 0;
+				current_A = 0;
+				current[0] = 10;
+				current[1] = 10;
+				current[2] = 10;
+				current[3] = 10;
+				current_dot = 0;
 			}
 			break;
 			
 		case LCD_PZ_POWER:
+			if(Value->e_display_level == DISPLAY_NORMAL) {
+				power_text = 1;
+				power_W = 1;
 				power_K = Value->flag_symbol_K;
-			if(Value->value_integer > 999) {
+				power_calculate(power, &power_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+				power_text = 1;
+				power_W = 1;
+				power[0] = 10;
+				power[1] = 10;
+				power[2] = 10;
+				power[3] = 10;
 				power_dot = 0;
-				power[3] = (Value->value_integer % 10000) / 1000;
-				power[2] = (Value->value_integer % 1000) / 100;
-				power[1] = (Value->value_integer % 100) / 10;
-				power[0] = Value->value_integer % 10;
-			}else {
-				power_dot = 1;
-				if(Value->value_integer < 100) {
-					power[3] = 10; //no display number
-				}else {
-					power[3] = (Value->value_integer % 1000) / 100;
-				}
-				if(Value->value_integer < 10) {
-					power[2] = 10; //no display number
-				}else {
-					power[2] = (Value->value_integer % 100) / 10;
-				}
-				power[1] = Value->value_integer % 10;
-				power[0] = Value->value_decimal % 10;
+				power_K = 0;
+			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+				power_text = 0;
+				power_W = 0;
+				power_K = Value->flag_symbol_K;
+				power_calculate(power, &power_dot, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+				power_text = 0;
+				power_W = 0;
+				power[0] = 10;
+				power[1] = 10;
+				power[2] = 10;
+				power[3] = 10;
+				power_dot = 0;
+				power_K = 0;
 			}
 			break;
 			
 		case LCD_PZ_CONSUMPTION:
-			energy_K = Value->flag_symbol_K;
-			if(Value->value_integer < 1000) {
-				energy[3] = 10; //no display number
-			}else {
-				energy[3] = (Value->value_integer % 10000) / 1000;
+			if(Value->e_display_level == DISPLAY_NORMAL) {
+				energy_text = 1;
+				energy_Wh = 1;
+				energy_K = Value->flag_symbol_K;
+				consumption_calculate(energy, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+				energy_text = 1;
+				energy_Wh = 1;
+				energy[0] = 10;
+				energy[1] = 10;
+				energy[2] = 10;
+				energy[3] = 10;
+				energy_K = 0;
+			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+				energy_text = 0;
+				energy_Wh = 0;
+				energy_K = Value->flag_symbol_K;
+				consumption_calculate(energy, Value);
+			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+				energy_text = 0;
+				energy_Wh = 0;
+				energy[0] = 10;
+				energy[1] = 10;
+				energy[2] = 10;
+				energy[3] = 10;
+				energy_K = 0;
 			}
-			if(Value->value_integer < 100) {
-				energy[2] = 10; //no display number
-			}else {
-				energy[2] = (Value->value_integer % 1000) / 100;
-			}
-			if(Value->value_integer < 10) {
-				energy[1] = 10; //no display number
-			}else {
-				energy[1] = (Value->value_integer % 100) / 10;
-			}
-			energy[0] = Value->value_integer % 10;
 			break;
 			
 		default:

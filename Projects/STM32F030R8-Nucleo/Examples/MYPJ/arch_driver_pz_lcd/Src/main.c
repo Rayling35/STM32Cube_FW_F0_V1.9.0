@@ -30,40 +30,77 @@ int main(void)
 	while(1) {
 		Voltage.value_integer = 10010;
 		Voltage.value_decimal = 93;
-		
+		Voltage.e_display_level = DISPLAY_NORMAL;
 		Current.value_integer = 10010;
 		Current.value_decimal = 93;
-		
+		Current.e_display_level = DISPLAY_NORMAL;
 		Power.value_integer = 10010;
 		Power.value_decimal = 9;
-		Power.flag_symbol_K = 1;
-		
+		Power.flag_symbol_K = 0;
+		Power.e_display_level = DISPLAY_NORMAL;
 		Consumption.value_integer = 10010;
 		Consumption.flag_symbol_K = 0;
+		Consumption.e_display_level = DISPLAY_NORMAL;
 		
 		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
 		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
 		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
 		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
-		HAL_Delay(2000);
+		HAL_Delay(1000);
+		
 		
 		Voltage.value_integer = 10;
 		Voltage.value_decimal = 00;
-		
-		Current.value_integer = 100;
+		Voltage.e_display_level = DISPLAY_MASK_TEXT;
+		Current.value_integer = 10;
 		Current.value_decimal = 00;
-		
+		Current.e_display_level = DISPLAY_MASK_TEXT;
 		Power.value_integer = 10;
 		Power.value_decimal = 0;
-		Power.flag_symbol_K = 0;
-		
+		Power.flag_symbol_K = 1;
+		Power.e_display_level = DISPLAY_MASK_TEXT;
 		Consumption.value_integer = 10;
 		Consumption.flag_symbol_K = 1;
 		
+		Consumption.e_display_level = DISPLAY_MASK_TEXT;
 		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
 		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
 		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
 		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
-		HAL_Delay(2000);
+		HAL_Delay(1000);
+		
+		
+		Voltage.e_display_level = DISPLAY_MASK_NUMBER_TEXT;
+		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
+		HAL_Delay(1000);
+		
+		Current.e_display_level = DISPLAY_MASK_NUMBER_TEXT;
+		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
+		HAL_Delay(1000);
+		
+		Consumption.e_display_level = DISPLAY_MASK_NUMBER_TEXT;
+		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
+		HAL_Delay(1000);
+		
+		Power.e_display_level = DISPLAY_MASK_NUMBER_TEXT;
+		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
+		HAL_Delay(1000);
+		
+		
+		Voltage.e_display_level = DISPLAY_MASK_NUMBER;
+		lcd_value_send(Pz_lcd, LCD_PZ_VOLTAGE, &Voltage);
+		HAL_Delay(1000);
+		
+		Current.e_display_level = DISPLAY_MASK_NUMBER;
+		lcd_value_send(Pz_lcd, LCD_PZ_CURRENT, &Current);
+		HAL_Delay(1000);
+		
+		Consumption.e_display_level = DISPLAY_MASK_NUMBER;
+		lcd_value_send(Pz_lcd, LCD_PZ_CONSUMPTION, &Consumption);
+		HAL_Delay(1000);
+		
+		Power.e_display_level = DISPLAY_MASK_NUMBER;
+		lcd_value_send(Pz_lcd, LCD_PZ_POWER, &Power);
+		HAL_Delay(1000);
 	}
 }
