@@ -21,6 +21,6 @@ int main(void)
 	
 	while(1) {
 		sensor_sample_fetch(Rn8209g);
-		HAL_Delay(2000);
+		HAL_Delay(1000);
 	}
 }
