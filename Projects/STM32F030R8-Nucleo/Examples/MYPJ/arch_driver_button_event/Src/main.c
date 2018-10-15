@@ -35,15 +35,26 @@ static void button_thread(const void *button_event)
 
 static void main_thread(const void *argument)
 {
+	uint8_t count_click;
+	
 	while(1) {
-		printf("Run\r\n");
+		printf("Run %d\r\n", My_button_press_status.value_get_timer);
 		
-		if(button_click) {
+		if(My_button_press_status.value_get_timer > 0 && My_button_press_status.value_get_timer < 1000) {
+			count_click = 1;
+		}
+		if(button_click && !count_click) {
 			button_click = 0;
+		}
+		if(button_click && count_click) {
+			button_click = 0;
+			count_click = 0;
 			printf("Button click\r\n");
 		}
 		
+#if 1
 		if(My_button_press_status.flag_button_press_1_second) {
+			count_click = 0;
 			printf("go into Button press 1 seconds\r\n");
 			while(My_button_press_status.flag_button_press_1_second || !button_click) {
 				osDelay(1);
@@ -62,6 +73,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_1_second) {
+			count_click = 0;
 			printf("go into Button press 1-1 seconds\r\n");
 			while(My_button_press_status.flag_button_press_1_second || !button_click) {
 				osDelay(1);
@@ -80,6 +92,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_1_second) {
+			count_click = 0;
 			printf("go into Button press 1-2 seconds\r\n");
 			while(My_button_press_status.flag_button_press_1_second || !button_click) {
 				osDelay(1);
@@ -98,6 +111,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_1_second) {
+			count_click = 0;
 			printf("go into Button press 1-3 seconds\r\n");
 			while(My_button_press_status.flag_button_press_1_second || !button_click) {
 				osDelay(1);
@@ -116,6 +130,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_2_second) {
+			count_click = 0;
 			printf("go into Button press 2 seconds\r\n");
 			while(My_button_press_status.flag_button_press_2_second || !button_click) {
 				osDelay(1);
@@ -135,10 +150,11 @@ static void main_thread(const void *argument)
 			}
 			printf("Save and Exit 2 second house\r\n");
 		}
-		
-		
+#endif
+#if 1
 		if(My_button_press_status.flag_button_press_3_second)
 		{
+			count_click = 0;
 			printf("-->Button press 3 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_4_second || button_click) {
 				if(button_click) {
@@ -165,18 +181,61 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_4_second) {
+			count_click = 0;
 			printf("-->Button press 4 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_5_second || button_click) {
 				if(button_click) {
 					button_click = 0;
-					printf("go into Button press 4 seconds\r\n");
 					while(1) {
-						if(button_click) {
-							button_click = 0;
-							printf("Button click in 4 second house\r\n");
-						}
+							printf("go into Button press 4-1 seconds\r\n");
+							while(1) {
+								if(button_click) {
+									button_click = 0;
+									printf("Button click in 4-1 second house\r\n");
+								}
+								if(My_button_press_status.flag_button_press_1_second) {
+									break;
+								}
+							}
+							printf("Save and Exit 4-1 second house\r\n");
+						
 						if(My_button_press_status.flag_button_press_1_second) {
-							printf("Save and Exit 4 second house\r\n");
+							printf("go into Button press 4-2 seconds\r\n");
+							while(My_button_press_status.flag_button_press_1_second || !button_click) {
+								osDelay(1);
+							}
+							button_click = 0;
+							while(1) {
+								if(button_click) {
+									button_click = 0;
+									printf("Button click in 4-2 second house\r\n");
+								}
+								if(My_button_press_status.flag_button_press_1_second) {
+									break;
+								}
+							}
+							printf("Save and Exit 4-2 second house\r\n");
+						}
+						
+						if(My_button_press_status.flag_button_press_1_second) {
+							printf("go into Button press 4-3 seconds\r\n");
+							while(My_button_press_status.flag_button_press_1_second || !button_click) {
+								osDelay(1);
+							}
+							button_click = 0;
+							while(1) {
+								if(button_click) {
+									button_click = 0;
+									printf("Button click in 4-3 second house\r\n");
+								}
+								if(My_button_press_status.flag_button_press_1_second) {
+									break;
+								}
+							}
+							printf("Save and Exit 4-3 second house\r\n");
+						}
+						
+						if(My_button_press_status.flag_button_press_1_second) {
 							while(!button_click) {
 								osDelay(1);
 							}
@@ -191,6 +250,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_5_second) {
+			count_click = 0;
 			printf("-->Button press 5 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_6_second || button_click) {
 				if(button_click) {
@@ -217,6 +277,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_6_second) {
+			count_click = 0;
 			printf("-->Button press 6 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_7_second || button_click) {
 				if(button_click) {
@@ -243,6 +304,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_7_second) {
+			count_click = 0;
 			printf("-->Button press 7 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_8_second || button_click) {
 				if(button_click) {
@@ -269,6 +331,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_8_second) {
+			count_click = 0;
 			printf("-->Button press 8 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_9_second || button_click) {
 				if(button_click) {
@@ -295,6 +358,7 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_9_second) {
+			count_click = 0;
 			printf("-->Button press 9 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_10_second || button_click) {
 				if(button_click) {
@@ -324,6 +388,7 @@ static void main_thread(const void *argument)
 			 My_button_press_status.flag_button_press_11_second ||
 			 My_button_press_status.flag_button_press_12_second)
 		{
+			count_click = 0;
 			printf("-->Button press 10 -> 11 -> 12 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_13_second || button_click) {
 				if(button_click) {
@@ -350,53 +415,62 @@ static void main_thread(const void *argument)
 		}
 		
 		if(My_button_press_status.flag_button_press_13_second) {
+			count_click = 0;
 			printf("Button press 13 seconds\r\n");
 			while(My_button_press_status.flag_button_press_13_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_14_second) {
+			count_click = 0;
 			printf("Button press 14 seconds\r\n");
 			while(My_button_press_status.flag_button_press_14_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_15_second) {
+			count_click = 0;
 			printf("Button press 15 seconds\r\n");
 			while(My_button_press_status.flag_button_press_15_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_16_second) {
+			count_click = 0;
 			printf("Button press 16 seconds\r\n");
 			while(My_button_press_status.flag_button_press_16_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_17_second) {
+			count_click = 0;
 			printf("Button press 17 seconds\r\n");
 			while(My_button_press_status.flag_button_press_17_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_18_second) {
+			count_click = 0;
 			printf("Button press 18 seconds\r\n");
 			while(My_button_press_status.flag_button_press_18_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_19_second) {
+			count_click = 0;
 			printf("Button press 19 seconds\r\n");
 			while(My_button_press_status.flag_button_press_19_second) {
 				osDelay(1);
 			}
 		}
 		if(My_button_press_status.flag_button_press_20_second) {
+			count_click = 0;
 			printf("Button press 20 seconds\r\n");
 			while(My_button_press_status.flag_button_press_20_second) {
 				osDelay(1);
 			}
 		}
+#endif
 	}
 }
 

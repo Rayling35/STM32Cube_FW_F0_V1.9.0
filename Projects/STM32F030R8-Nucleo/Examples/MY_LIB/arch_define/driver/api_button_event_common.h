@@ -27,6 +27,7 @@ struct button_status {
 	uint8_t flag_button_press_18_second;
 	uint8_t flag_button_press_19_second;
 	uint8_t flag_button_press_20_second;
+	uint32_t value_get_timer;
 };
 
                /*-----------API--------------*/

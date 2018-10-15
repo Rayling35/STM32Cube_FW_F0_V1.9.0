@@ -34,6 +34,8 @@ static int get_press_status_data(struct device *Dev, struct button_status *Statu
 {
 	uint32_t seconds = get_press_time_data(Dev);
 	
+	Status->value_get_timer = seconds;
+	
 	if(seconds > 0) {
 		Status->flag_button_press = 1;
 	}else {
