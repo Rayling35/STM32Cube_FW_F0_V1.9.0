@@ -152,8 +152,7 @@ static void main_thread(const void *argument)
 		}
 #endif
 #if 1
-		if(My_button_press_status.flag_button_press_3_second)
-		{
+		if(My_button_press_status.flag_button_press_3_second) {
 			count_click = 0;
 			printf("-->Button press 3 seconds\r\n");
 			while(!My_button_press_status.flag_button_press_4_second || button_click) {

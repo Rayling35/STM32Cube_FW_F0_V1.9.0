@@ -177,11 +177,11 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 	
 	switch (e_type) {
 		case LCD_PZ_VOLTAGE:
-			if(Value->e_display_level == DISPLAY_NORMAL) {
+			if(Value->e_display_mode == DISPLAY_NORMAL) {
 				voltage_text = 1;
 				voltage_V = 1;
 				voltage_calculate(voltage, &voltage_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER) {
 				voltage_text = 1;
 				voltage_V = 1;
 				voltage[0] = 10;
@@ -189,11 +189,11 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				voltage[2] = 10;
 				voltage[3] = 10;
 				voltage_dot = 0;
-			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_TEXT) {
 				voltage_text = 0;
 				voltage_V = 0;
 				voltage_calculate(voltage, &voltage_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER_TEXT) {
 				voltage_text = 0;
 				voltage_V = 0;
 				voltage[0] = 10;
@@ -201,15 +201,23 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				voltage[2] = 10;
 				voltage[3] = 10;
 				voltage_dot = 0;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_1) {
+				voltage[0] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_2) {
+				voltage[1] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_3) {
+				voltage[2] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_4) {
+				voltage[3] = Value->value_integer;
 			}
 			break;
 			
 		case LCD_PZ_CURRENT:
-			if(Value->e_display_level == DISPLAY_NORMAL) {
+			if(Value->e_display_mode == DISPLAY_NORMAL) {
 				current_text = 1;
 				current_A = 1;
 				current_calculate(current, &current_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER) {
 				current_text = 1;
 				current_A = 1;
 				current[0] = 10;
@@ -217,11 +225,11 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				current[2] = 10;
 				current[3] = 10;
 				current_dot = 0;
-			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_TEXT) {
 				current_text = 0;
 				current_A = 0;
 				current_calculate(current, &current_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER_TEXT) {
 				current_text = 0;
 				current_A = 0;
 				current[0] = 10;
@@ -229,16 +237,24 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				current[2] = 10;
 				current[3] = 10;
 				current_dot = 0;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_1) {
+				current[0] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_2) {
+				current[1] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_3) {
+				current[2] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_4) {
+				current[3] = Value->value_integer;
 			}
 			break;
 			
 		case LCD_PZ_POWER:
-			if(Value->e_display_level == DISPLAY_NORMAL) {
+			if(Value->e_display_mode == DISPLAY_NORMAL) {
 				power_text = 1;
 				power_W = 1;
 				power_K = Value->flag_symbol_K;
 				power_calculate(power, &power_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER) {
 				power_text = 1;
 				power_W = 1;
 				power[0] = 10;
@@ -247,12 +263,12 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				power[3] = 10;
 				power_dot = 0;
 				power_K = 0;
-			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_TEXT) {
 				power_text = 0;
 				power_W = 0;
 				power_K = Value->flag_symbol_K;
 				power_calculate(power, &power_dot, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER_TEXT) {
 				power_text = 0;
 				power_W = 0;
 				power[0] = 10;
@@ -261,16 +277,26 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				power[3] = 10;
 				power_dot = 0;
 				power_K = 0;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_1) {
+				power[0] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_2) {
+				power[1] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_3) {
+				power[2] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_4) {
+				power[3] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_SYMBOL_K) {
+				power_K = Value->flag_symbol_K;
 			}
 			break;
 			
 		case LCD_PZ_CONSUMPTION:
-			if(Value->e_display_level == DISPLAY_NORMAL) {
+			if(Value->e_display_mode == DISPLAY_NORMAL) {
 				energy_text = 1;
 				energy_Wh = 1;
 				energy_K = Value->flag_symbol_K;
 				consumption_calculate(energy, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER) {
 				energy_text = 1;
 				energy_Wh = 1;
 				energy[0] = 10;
@@ -278,12 +304,12 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				energy[2] = 10;
 				energy[3] = 10;
 				energy_K = 0;
-			}else if(Value->e_display_level == DISPLAY_MASK_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_TEXT) {
 				energy_text = 0;
 				energy_Wh = 0;
 				energy_K = Value->flag_symbol_K;
 				consumption_calculate(energy, Value);
-			}else if(Value->e_display_level == DISPLAY_MASK_NUMBER_TEXT) {
+			}else if(Value->e_display_mode == DISPLAY_MASK_NUMBER_TEXT) {
 				energy_text = 0;
 				energy_Wh = 0;
 				energy[0] = 10;
@@ -291,6 +317,16 @@ static void display_update(struct device *Dev, enum lcd_type e_type, struct lcd_
 				energy[2] = 10;
 				energy[3] = 10;
 				energy_K = 0;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_1) {
+				energy[0] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_2) {
+				energy[1] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_3) {
+				energy[2] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_NUMBER_4) {
+				energy[3] = Value->value_integer;
+			}else if(Value->e_display_mode == DISPLAY_ONLY_SYMBOL_K) {
+				energy_K = Value->flag_symbol_K;
 			}
 			break;
 			

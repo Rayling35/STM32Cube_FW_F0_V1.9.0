@@ -5,18 +5,23 @@
 #define __API_LCD_COMMON_H
 
 
-enum display_level {
+enum display_mode {
 	DISPLAY_NORMAL,
 	DISPLAY_MASK_NUMBER,
 	DISPLAY_MASK_TEXT,
 	DISPLAY_MASK_NUMBER_TEXT,
+	DISPLAY_ONLY_NUMBER_1, //only 0 ~ 10 @ value_integer
+	DISPLAY_ONLY_NUMBER_2, //only 0 ~ 10 @ value_integer
+	DISPLAY_ONLY_NUMBER_3, //only 0 ~ 10 @ value_integer
+	DISPLAY_ONLY_NUMBER_4, //only 0 ~ 10 @ value_integer
+	DISPLAY_ONLY_SYMBOL_K, //only 0 & 1 @ flag_symbol_K
 };
 
 struct lcd_value {
 	uint32_t value_integer;
 	uint32_t value_decimal;
 	uint8_t flag_symbol_K;
-	enum display_level e_display_level;
+	enum display_mode e_display_mode;
 };
 
 enum lcd_type {
@@ -29,10 +34,10 @@ enum lcd_type {
 };
 
                /*-----------API--------------*/
-typedef int (*lcd_api_value_send)(struct device *Dev, enum lcd_type e_type, struct lcd_value *Val);
+typedef int (*lcd_api_1)(struct device *Dev, enum lcd_type e_type, struct lcd_value *Val);
 
 struct lcd_common_api {
-	lcd_api_value_send value_send;
+	lcd_api_1 value_send;
 };
 
 
