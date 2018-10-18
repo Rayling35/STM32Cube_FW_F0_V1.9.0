@@ -9,7 +9,27 @@ struct rn8209g_data {
 	struct device *Spi;
 	struct device *Gpio;
 	
-	uint8_t value_rn8209g_rx[3];
+	uint32_t value_voltage_integer;
+	uint32_t value_voltage_decimal;
+	uint32_t value_current_integer;
+	uint32_t value_current_decimal;
+	uint32_t value_power_integer;
+	uint32_t value_power_decimal;
+	uint32_t value_consumption_integer;
+	uint32_t value_consumption_decimal;
+};
+
+struct rn8209g_config {
+	uint8_t value_enable_write;
+	uint8_t value_disable_write;
+	uint8_t value_ia_chnsel;
+	uint8_t value_ib_chnsel;
+	uint8_t value_soft_reset;
+	
+	uint32_t value_clkin;
+	uint32_t value_ku;
+	uint32_t value_kia;
+	uint32_t value_kib;
 };
 
 //SPI_POLARITY_LOW,SPI_PHASE_2EDGE

@@ -26,12 +26,12 @@ enum sensor_type {
 };
 
                /*-----------API--------------*/
-typedef int (*sensor_api_sample_fetch)(struct device *Dev, enum sensor_type e_type);
-typedef int (*sensor_api_value_get)(struct device *Dev, enum sensor_type e_type, struct sensor_value *Val);
+typedef int (*sensor_api_1)(struct device *Dev, enum sensor_type e_type);
+typedef int (*sensor_api_2)(struct device *Dev, enum sensor_type e_type, struct sensor_value *Val);
 
 struct sensor_common_api {
-	sensor_api_sample_fetch sample_fetch;
-	sensor_api_value_get value_get;
+	sensor_api_1 sample_fetch;
+	sensor_api_2 value_get;
 };
 
 
