@@ -27,9 +27,17 @@ struct rn8209g_config {
 	uint8_t value_soft_reset;
 	
 	uint32_t value_clkin;
-	uint32_t value_ku;
-	uint32_t value_kia;
-	uint32_t value_kib;
+	uint16_t value_ku;
+	uint16_t value_kia;
+	uint16_t value_kib;
+	
+	uint16_t value_hfconst;
+	uint16_t value_pstart;
+	uint16_t value_dstart;
+	uint16_t value_gpqa;
+	uint8_t  value_phsa;
+	uint16_t value_aposa;
+	uint16_t value_iarmsos;
 };
 
 //SPI_POLARITY_LOW,SPI_PHASE_2EDGE
@@ -89,6 +97,61 @@ struct rn8209g_config {
 #define RN8209G_DeviceID          0x7F
 
 #define RN8209G_SPECIAL           0xEA
+
+#define REG_BIT_SET(data,reg,set) (set == 1 ? SET_BIT(data, 1 << reg) : CLEAR_BIT(data, 1 << reg))
+
+enum REG_SYSCON_00H {
+	PGAIA_0 = 0,
+	PGAIA_1,
+	PGAU_2,
+	PGAU_3,
+	PGAIB_4,
+	PGAIB_5,
+	ADC2ON_6,
+	Uartbr_8 = 8,
+	Uartbr_9,
+	Uartbr_10,
+	Uartbr_11,
+	Uartbr_12,
+	Uartbr_13,
+	Uartbr_14,
+};
+
+enum REG_EMUCON_01H {
+	PRUN_0 = 0,
+	DRUN_1,
+	CFSU_2,
+	CFSU_3,
+	CFSUEN_4,
+	HPFUOFF_5,
+	HPFIAOFF_6,
+	ZXCFG_7,
+	ZXD0_8,
+	ZXD1_9,
+	PMOD_10,
+	PMOD_11,
+	QMOD_12,
+	QMOD_13,
+	HPFIBOFF_14,
+	EnergyCLR_15,
+};
+
+enum REG_EMUCON2_17H {
+	D2FM_4 = 4,
+	D2FM_5,
+	ZXMODE_6,
+	PhsA0_8 = 8,
+	PhsB0_9,
+};
+
+enum REG_IE_40H {
+	DUPDIE_0 = 0,
+	PFIE_1,
+	QFIE_2,
+	PEOIE_3,
+	QEOIE_4,
+	ZXIE_5,
+};
 
 struct device* rn8209g_device_binding(void);
 
