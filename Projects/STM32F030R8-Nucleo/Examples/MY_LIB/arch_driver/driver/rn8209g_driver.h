@@ -27,10 +27,9 @@ struct rn8209g_config {
 	uint8_t value_soft_reset;
 	
 	uint32_t value_clkin;
-	uint16_t value_ku;
-	uint16_t value_kia;
-	uint16_t value_kib;
-	
+	uint32_t value_kv;
+	uint32_t value_kia;
+	uint32_t value_kp;
 	uint16_t value_hfconst;
 	uint16_t value_pstart;
 	uint16_t value_dstart;

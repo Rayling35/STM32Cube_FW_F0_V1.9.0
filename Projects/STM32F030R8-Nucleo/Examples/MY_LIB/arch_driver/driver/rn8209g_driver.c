@@ -158,18 +158,18 @@ static void fetch_voltage(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_URMS, reg_data, 3);
-//	printf("RN8209G_URMS = 0x%06X, %d\r\n", *data, *data);
-	*data = D_config->value_ku * *data / 10000;
+	printf("RN8209G_URMS    = 0x%06X, %d\r\n", *data, *data);
+	*data = D_config->value_kv * *data / 100000;
 	D_data->value_voltage_integer = *data / 100;
 	D_data->value_voltage_decimal = *data % 100;
-	printf("RN8209G_URMS = %d.%dV\r\n", D_data->value_voltage_integer, D_data->value_voltage_decimal);
+	printf("RN8209G_URMS    = %d.%dV\r\n", D_data->value_voltage_integer, D_data->value_voltage_decimal);
 	
 	reg_data[3] = 0;
 	reg_data[2] = 0;
 	register_read(Dev, RN8209G_UFreq, reg_data, 2);
-//	printf("RN8209G_UFreq = 0x%04X, %d\r\n", *data, *data);
+	printf("RN8209G_UFreq   = 0x%04X, %d\r\n", *data, *data);
 	*data = D_config->value_clkin*100 / 8 / *data;
-	printf("RN8209G_UFreq = %d.%dHz\r\n", *data/100, *data%100);
+	printf("RN8209G_UFreq   = %d.%dHz\r\n", *data/100, *data%100);
 }
 
 static void fetch_current(struct device *Dev)
@@ -181,25 +181,26 @@ static void fetch_current(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_IARMS, reg_data, 3);
-//	printf("RN8209G_IARMS = 0x%06X, %d\r\n", *data, *data);
-	*data = D_config->value_kia * *data / 10000;
+	printf("RN8209G_IARMS   = 0x%06X, %d\r\n", *data, *data);
+	*data = D_config->value_kia * *data / 1000000;
 	D_data->value_current_integer = *data / 100;
 	D_data->value_current_decimal = *data % 100;
-	printf("RN8209G_IARMS = %d.%dA\r\n", D_data->value_current_integer, D_data->value_current_decimal);
+	printf("RN8209G_IARMS   = %d.%dA\r\n", D_data->value_current_integer, D_data->value_current_decimal);
 }
 
 static void fetch_power(struct device *Dev)
 {
 	struct rn8209g_data *D_data = Dev->data;
+	const struct rn8209g_config *D_config = Dev->config;
 	uint8_t reg_data[4];
 	uint32_t *data = (uint32_t *)reg_data;
 	
 	register_read(Dev, RN8209G_PowerPA, reg_data, 4);
-//	printf("RN8209G_PowerPA = 0x%08X, %d\r\n", *data, *data);
-	
-	D_data->value_power_integer = *data;
-	D_data->value_power_decimal = *data;
-	printf("RN8209G_PowerPA = %d,%dW\r\n", D_data->value_power_integer, D_data->value_power_decimal);
+	printf("RN8209G_PowerPA = 0x%08X, %d\r\n", *data, *data);
+	*data = D_config->value_kp * *data / 1000000;
+	D_data->value_power_integer = *data / 100;
+	D_data->value_power_decimal = *data % 100;
+	printf("RN8209G_PowerPA = %d.%dW\r\n", D_data->value_power_integer, D_data->value_power_decimal);
 }
 
 static void fetch_consumption(struct device *Dev)
@@ -210,7 +211,7 @@ static void fetch_consumption(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_EnergyP, reg_data, 3);
-//	printf("RN8209G_EnergyP = 0x%06X, %d\r\n", *data, *data);
+	printf("RN8209G_EnergyP = 0x%06X, %d\r\n", *data, *data);
 	
 	D_data->value_consumption_integer = *data;
 	printf("RN8209G_EnergyP = %dhW\r\n", D_data->value_consumption_integer);
@@ -364,6 +365,7 @@ static int rn8209g_sample_fetch(struct device *Dev, enum sensor_type e_type)
 		default:
 			return -1;
 	}
+	printf("\r\n");
 	register_list(Dev);
 	printf("\r\n");
 	return 0;
@@ -382,52 +384,52 @@ static void calibration(struct device *Dev)
 	
 	//00H
 	register_read(Dev, RN8209G_SYSCON, reg_data, 2);
-	REG_BIT_SET(*reg_data, ADC2ON_6, 0); //1
-	REG_BIT_SET(*reg_data, PGAIB_5,  0); //1
-	REG_BIT_SET(*reg_data, PGAIB_4,  0); //1
-	REG_BIT_SET(*reg_data, PGAU_3,   0); //1
-	REG_BIT_SET(*reg_data, PGAU_2,   0); //1
-	REG_BIT_SET(*reg_data, PGAIA_1,  1); //1
-	REG_BIT_SET(*reg_data, PGAIA_0,  1); //1
+	REG_BIT_SET(*data, ADC2ON_6, 0); //1
+	REG_BIT_SET(*data, PGAIB_5,  0); //1
+	REG_BIT_SET(*data, PGAIB_4,  0); //1
+	REG_BIT_SET(*data, PGAU_3,   0); //1
+	REG_BIT_SET(*data, PGAU_2,   0); //1
+	REG_BIT_SET(*data, PGAIA_1,  1); //1
+	REG_BIT_SET(*data, PGAIA_0,  1); //1
 	register_write(Dev, RN8209G_SYSCON, reg_data, 2);
 	
 	//01H
 	register_read(Dev, RN8209G_EMUCON, reg_data, 2);
-	REG_BIT_SET(*reg_data, EnergyCLR_15, 0);
-	REG_BIT_SET(*reg_data, HPFIBOFF_14,  0); //1
-	REG_BIT_SET(*reg_data, QMOD_13,      0); //4
-	REG_BIT_SET(*reg_data, QMOD_12,      0); //4
-	REG_BIT_SET(*reg_data, PMOD_11,      0); //4
-	REG_BIT_SET(*reg_data, PMOD_10,      0); //4
-	REG_BIT_SET(*reg_data, ZXD1_9,       0);
-	REG_BIT_SET(*reg_data, ZXD0_8,       0);
-	REG_BIT_SET(*reg_data, ZXCFG_7,      0);
-	REG_BIT_SET(*reg_data, HPFIAOFF_6,   0); //1
-	REG_BIT_SET(*reg_data, HPFUOFF_5,    0); //1
-	REG_BIT_SET(*reg_data, CFSUEN_4,     0); //4
-	REG_BIT_SET(*reg_data, CFSU_3,       0); //4
-	REG_BIT_SET(*reg_data, CFSU_2,       0); //4
-	REG_BIT_SET(*reg_data, DRUN_1,       1); //4
-	REG_BIT_SET(*reg_data, PRUN_0,       1); //4
+	REG_BIT_SET(*data, EnergyCLR_15, 0);
+	REG_BIT_SET(*data, HPFIBOFF_14,  0); //1
+	REG_BIT_SET(*data, QMOD_13,      0); //4
+	REG_BIT_SET(*data, QMOD_12,      0); //4
+	REG_BIT_SET(*data, PMOD_11,      0); //4
+	REG_BIT_SET(*data, PMOD_10,      0); //4
+	REG_BIT_SET(*data, ZXD1_9,       0);
+	REG_BIT_SET(*data, ZXD0_8,       0);
+	REG_BIT_SET(*data, ZXCFG_7,      0);
+	REG_BIT_SET(*data, HPFIAOFF_6,   0); //1
+	REG_BIT_SET(*data, HPFUOFF_5,    0); //1
+	REG_BIT_SET(*data, CFSUEN_4,     0); //4
+	REG_BIT_SET(*data, CFSU_3,       0); //4
+	REG_BIT_SET(*data, CFSU_2,       0); //4
+	REG_BIT_SET(*data, DRUN_1,       1); //4
+	REG_BIT_SET(*data, PRUN_0,       1); //4
 	register_write(Dev, RN8209G_EMUCON, reg_data, 2);
 	
 	//17H
 	register_read(Dev, RN8209G_EMUCON2, reg_data, 2);
-	REG_BIT_SET(*reg_data, PhsB0_9,  0); //1
-	REG_BIT_SET(*reg_data, PhsA0_8,  0); //1
-	REG_BIT_SET(*reg_data, ZXMODE_6, 0);
-	REG_BIT_SET(*reg_data, D2FM_5,   0); //4
-	REG_BIT_SET(*reg_data, D2FM_4,   0); //4
+	REG_BIT_SET(*data, PhsB0_9,  0); //1
+	REG_BIT_SET(*data, PhsA0_8,  0); //1
+	REG_BIT_SET(*data, ZXMODE_6, 0);
+	REG_BIT_SET(*data, D2FM_5,   0); //4
+	REG_BIT_SET(*data, D2FM_4,   0); //4
 	register_write(Dev, RN8209G_EMUCON2, reg_data, 2);
 	
 	//40H
 	register_read(Dev, RN8209G_IE, reg_data, 1);
-	REG_BIT_SET(*reg_data, ZXIE_5,   0);
-	REG_BIT_SET(*reg_data, QEOIE_4,  0);
-	REG_BIT_SET(*reg_data, PEOIE_3,  0);
-	REG_BIT_SET(*reg_data, QFIE_2,   0);
-	REG_BIT_SET(*reg_data, PFIE_1,   0);
-	REG_BIT_SET(*reg_data, DUPDIE_0, 0);
+	REG_BIT_SET(*data, ZXIE_5,   0);
+	REG_BIT_SET(*data, QEOIE_4,  0);
+	REG_BIT_SET(*data, PEOIE_3,  0);
+	REG_BIT_SET(*data, QFIE_2,   0);
+	REG_BIT_SET(*data, PFIE_1,   0);
+	REG_BIT_SET(*data, DUPDIE_0, 0);
 	register_write(Dev, RN8209G_IE, reg_data, 1);
 	
 	//02H
@@ -476,16 +478,27 @@ static const struct rn8209g_config Rn8209g_config = {
 	.value_soft_reset    = 0xFA,
 	
 	.value_clkin   = 3579545,
-	.value_ku      = 112,
-	.value_kia     = 15,
-	
-	.value_hfconst = 0x1000, //4
-	.value_pstart  = 0x60,   //4
-	.value_dstart  = 0x120,  //4
-	.value_gpqa    = 0x0,    //2
-	.value_phsa    = 0x0,    //1
-	.value_aposa   = 0x0,    //2
-	.value_iarmsos = 0x0,    //3
+	.value_kv      = 1125,
+	.value_kia     = 1512,
+	.value_kp      = 8324,
+	.value_hfconst = 0x0B00, //4
+	.value_pstart  = 0x0060, //4
+	.value_dstart  = 0x0120, //4
+	.value_gpqa    = 0x0000, //2
+	.value_phsa    = 0x00,   //1
+	.value_aposa   = 0x0000, //2
+	.value_iarmsos = 0x0000, //3
+	/**
+	Un = 108V
+	Ib = 6.28A
+	EC = 3200
+	Kv = Un/URMS                                                 => 108/959597 = 0.0001125
+	Ki = Ib/IARMS                                               => 6.28/415124 = 0.00001512
+	Vu = Un*(1K/(1M+1K))*1                                     => 108*(1/1001) = 0.10789V
+	Vi = Ib*Rm*16                                           => 6.28*0.00035*16 = 0.035168V
+	HFConst = INT[(16.1079*Vu*Vi*10^11)/(Un*Ib*EC)]      => 6111781065/2170368 = 2816(B00h)
+	Kp = (3.22155*10^12)/(2^32*HFConst*EC)  => 3221550000000/38702809297715200 = 0.00008324
+	**/
 };
 
 static int rn8209g_device_init(struct device *Dev)
