@@ -81,7 +81,7 @@ static int gpio_b2_read(void)
 	return HAL_GPIO_ReadPin(PB2_PORT, PB2_PIN);
 }
 
-static void gpio_b2_write(uint16_t state)
+static void gpio_b2_write(uint8_t state)
 {
 	if(state == 0) {
 		HAL_GPIO_WritePin(PB2_PORT, PB2_PIN, GPIO_PIN_RESET);

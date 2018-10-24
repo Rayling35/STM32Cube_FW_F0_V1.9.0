@@ -12,7 +12,7 @@ enum count_unit {
 
                /*-----------API--------------*/
 typedef int (*gpio_api_1)(struct device *Dev);
-typedef void (*gpio_api_2)(struct device *Dev, uint16_t state);
+typedef void (*gpio_api_2)(struct device *Dev, uint8_t state);
 typedef void (*gpio_api_3)(struct device *Dev);
 typedef uint32_t (*gpio_api_4)(struct device *Dev, enum count_unit e_unit);
 
@@ -36,7 +36,7 @@ static inline int gpio_read(struct device *Dev)
 	return D_api->read(Dev);
 }
 
-static inline void gpio_write(struct device *Dev, uint16_t state)
+static inline void gpio_write(struct device *Dev, uint8_t state)
 {
 	const struct gpio_common_api *D_api = Dev->api;
 	D_api->write(Dev, state);

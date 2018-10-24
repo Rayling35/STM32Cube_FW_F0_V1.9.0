@@ -81,7 +81,7 @@ static int gpio_c6_read(void)
 	return HAL_GPIO_ReadPin(PC6_PORT, PC6_PIN);
 }
 
-static void gpio_c6_write(uint16_t state)
+static void gpio_c6_write(uint8_t state)
 {
 	if(state == 0) {
 		HAL_GPIO_WritePin(PC6_PORT, PC6_PIN, GPIO_PIN_RESET);

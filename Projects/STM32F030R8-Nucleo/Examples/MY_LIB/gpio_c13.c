@@ -81,7 +81,7 @@ static int gpio_c13_read(void)
 	return HAL_GPIO_ReadPin(PC13_PORT, PC13_PIN);
 }
 
-static void gpio_c13_write(uint16_t state)
+static void gpio_c13_write(uint8_t state)
 {
 	if(state == 0) {
 		HAL_GPIO_WritePin(PC13_PORT, PC13_PIN, GPIO_PIN_RESET);

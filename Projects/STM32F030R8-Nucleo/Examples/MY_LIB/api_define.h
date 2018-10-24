@@ -9,7 +9,7 @@
 struct gpio_api {
 	void (*init)        (void);
 	int  (*read)        (void);
-	void (*write)       (uint16_t state);
+	void (*write)       (uint8_t state);
 	void (*toggle_write)(void);
 	int  (*lock)        (void);
 };

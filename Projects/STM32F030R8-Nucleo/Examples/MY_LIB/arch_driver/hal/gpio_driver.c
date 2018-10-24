@@ -19,7 +19,7 @@ static int read_data(struct device *Dev)
 	return Gpio_hal->read();
 }
 
-static void write_data(struct device *Dev, uint16_t state)
+static void write_data(struct device *Dev, uint8_t state)
 {
 	struct gpio_data *D_data = Dev->data;
 	struct gpio_api *Gpio_hal = D_data->Gpio_hal;
