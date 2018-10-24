@@ -83,8 +83,8 @@ int flash_internal_write(enum flash_type e_type, enum flash_page e_page, uint32_
 uint16_t flash_internal_read_halfword(enum flash_page e_page, uint32_t offset);
 uint32_t flash_internal_read_word(enum flash_page e_page, uint32_t offset);
 uint64_t flash_internal_read_doubleword(enum flash_page e_page, uint32_t offset);
-int flash_data_write(enum flash_page e_page, uint32_t offset, uint8_t data[], uint16_t length);
-int flash_data_read(enum flash_page e_page, uint32_t offset, uint8_t data[], uint16_t length);
+int flash_data_write(enum flash_page e_page, uint32_t offset, uint8_t *data, uint16_t length);
+int flash_data_read(enum flash_page e_page, uint32_t offset, uint8_t *data, uint16_t length);
 
 
 #endif

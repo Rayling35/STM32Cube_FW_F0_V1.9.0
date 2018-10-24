@@ -72,7 +72,7 @@ uint64_t flash_internal_read_doubleword(enum flash_page e_page, uint32_t offset)
 	return data;
 }
 
-int flash_data_write(enum flash_page e_page, uint32_t offset, uint8_t data[], uint16_t length)
+int flash_data_write(enum flash_page e_page, uint32_t offset, uint8_t *data, uint16_t length)
 {
 	uint16_t i;
 	uint16_t *temp = (uint16_t *)data;
@@ -85,7 +85,7 @@ int flash_data_write(enum flash_page e_page, uint32_t offset, uint8_t data[], ui
 	return 0;
 }
 
-int flash_data_read(enum flash_page e_page, uint32_t offset, uint8_t data[], uint16_t length)
+int flash_data_read(enum flash_page e_page, uint32_t offset, uint8_t *data, uint16_t length)
 {
 	uint16_t i;
 	
