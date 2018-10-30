@@ -149,6 +149,23 @@ static int software_reset(struct device *Dev)
 	return 0;
 }
 
+static void clear_consumption_data(struct device *Dev)
+{
+	uint8_t reg_data[3];
+	uint16_t *data = (uint16_t *)reg_data;
+	
+	register_read(Dev, RN8209G_EMUCON, reg_data, 2);
+	REG_BIT_SET(*data, EnergyCLR_15, 1);
+	register_write(Dev, RN8209G_EMUCON, reg_data, 2);
+	
+	register_read(Dev, RN8209G_EnergyP, reg_data, 3);
+	register_read(Dev, RN8209G_EnergyD, reg_data, 3);
+	
+	register_read(Dev, RN8209G_EMUCON, reg_data, 2);
+	REG_BIT_SET(*data, EnergyCLR_15, 0);
+	register_write(Dev, RN8209G_EMUCON, reg_data, 2);
+}
+
 static void fetch_voltage(struct device *Dev)
 {
 	struct rn8209g_data *D_data = Dev->data;
@@ -214,7 +231,7 @@ static void fetch_consumption(struct device *Dev)
 	printf("RN8209G_EnergyP = 0x%06X, %d\r\n", *data, *data);
 	
 	D_data->value_consumption_integer = *data;
-	printf("RN8209G_EnergyP = %dhW\r\n", D_data->value_consumption_integer);
+	printf("RN8209G_EnergyP = %dWh\r\n", D_data->value_consumption_integer);
 }
 
 static void register_list(struct device *Dev)
@@ -314,26 +331,38 @@ static void register_list(struct device *Dev)
 	printf("\r\n");
 }
 
-static int rn8209g_value_get(struct device *Dev, enum sensor_type e_type, struct sensor_value *Val)
+static int rn8209g_data_clear(struct device *Dev, enum sensor_type e_type)
+{
+	switch (e_type) {
+		case SENSOR_RN8209G_CONSUMPTION:
+			clear_consumption_data(Dev);
+			break;
+		default:
+			return -1;
+	}
+	return 0;
+}
+
+static int rn8209g_value_get(struct device *Dev, enum sensor_type e_type, struct sensor_value *Data)
 {
 	struct rn8209g_data *D_data = Dev->data;
 	
 	switch (e_type) {
 		case SENSOR_RN8209G_VOLTAGE:
-			Val->value_integer = D_data->value_voltage_integer;
-			Val->value_decimal = D_data->value_voltage_decimal;
+			Data->value_integer = D_data->value_voltage_integer;
+			Data->value_decimal = D_data->value_voltage_decimal;
 			break;
 		case SENSOR_RN8209G_CURRENT:
-			Val->value_integer = D_data->value_current_integer;
-			Val->value_decimal = D_data->value_current_decimal;
+			Data->value_integer = D_data->value_current_integer;
+			Data->value_decimal = D_data->value_current_decimal;
 			break;
 		case SENSOR_RN8209G_POWER:
-			Val->value_integer = D_data->value_power_integer;
-			Val->value_decimal = D_data->value_power_decimal;
+			Data->value_integer = D_data->value_power_integer;
+			Data->value_decimal = D_data->value_power_decimal;
 			break;
 		case SENSOR_RN8209G_CONSUMPTION:
-			Val->value_integer = D_data->value_consumption_integer;
-			Val->value_decimal = D_data->value_consumption_decimal;
+			Data->value_integer = D_data->value_consumption_integer;
+			Data->value_decimal = D_data->value_consumption_decimal;
 			break;
 		default:
 			return -1;
@@ -372,8 +401,9 @@ static int rn8209g_sample_fetch(struct device *Dev, enum sensor_type e_type)
 }
 
 static const struct sensor_common_api Rn8209g_api = {
-	.sample_fetch  = rn8209g_sample_fetch,
-	.value_get     = rn8209g_value_get,
+	.sample_fetch = rn8209g_sample_fetch,
+	.value_get    = rn8209g_value_get,
+	.data_clear   = rn8209g_data_clear
 };
 
 static void calibration(struct device *Dev)

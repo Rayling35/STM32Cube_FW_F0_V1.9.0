@@ -16,11 +16,16 @@ int main(void)
 	uart_printf_init();
 	
 	struct device *Rn8209g = rn8209g_device_binding();
+	struct sensor_value Rn8209g_data;
 	sensor_init(Rn8209g);
 	printf("All device init\r\n");
 	
 	while(1) {
 		sensor_sample_fetch(Rn8209g);
+		sensor_value_get(Rn8209g, SENSOR_RN8209G_CONSUMPTION, &Rn8209g_data);
+		if(Rn8209g_data.value_integer > 12) {
+			sensor_data_clear(Rn8209g, SENSOR_RN8209G_CONSUMPTION);
+		}
 		HAL_Delay(1000);
 	}
 }
