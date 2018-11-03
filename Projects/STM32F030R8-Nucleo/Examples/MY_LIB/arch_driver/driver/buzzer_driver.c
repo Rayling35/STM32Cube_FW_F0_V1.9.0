@@ -27,7 +27,7 @@ static int buzzer_device_init(struct device *Dev)
 {
 	struct buzzer_data *D_data = Dev->data;
 	
-	D_data->Pwm = pwm3_4_device_binding();
+	D_data->Pwm = pwm1_2_device_binding();
 	pwm_init(D_data->Pwm);
 	printf("Buzzer device init\r\n");
 	

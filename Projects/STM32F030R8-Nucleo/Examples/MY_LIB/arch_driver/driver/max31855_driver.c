@@ -54,7 +54,7 @@ static int max31855_device_init(struct device *Dev)
 {
 	struct max31855_data *D_data = Dev->data;
 	
-	D_data->Spi = spi1_cs0_device_binding();
+	D_data->Spi = spi2_cs0_device_binding();
 	spi_init(D_data->Spi);
 	printf("MAX31855 device init\r\n");
 	

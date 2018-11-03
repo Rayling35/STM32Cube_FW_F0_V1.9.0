@@ -6,7 +6,7 @@
 #include "api_define.h"
 
 
-TIM_HandleTypeDef TimHandle3;
+TIM_HandleTypeDef TimHandle1_3;
 
 static void _PWM1_3_MspInit(void)
 {
@@ -34,14 +34,14 @@ static int pwm1_3_pin_set(uint32_t period_cycles, uint32_t pulse_cycles, uint32_
 {
 	TIM_OC_InitTypeDef sConfig;
 	
-	TimHandle3.Instance               = TIM1;
-	TimHandle3.Init.Prescaler         = prescaler;
-	TimHandle3.Init.CounterMode       = TIM_COUNTERMODE_UP;
-	TimHandle3.Init.Period            = period_cycles;
-	TimHandle3.Init.ClockDivision     = 0;
-	TimHandle3.Init.RepetitionCounter = 0;
-	TimHandle3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-	HAL_TIM_PWM_Init(&TimHandle3);
+	TimHandle1_3.Instance               = TIM1;
+	TimHandle1_3.Init.Prescaler         = prescaler;
+	TimHandle1_3.Init.CounterMode       = TIM_COUNTERMODE_UP;
+	TimHandle1_3.Init.Period            = period_cycles;
+	TimHandle1_3.Init.ClockDivision     = 0;
+	TimHandle1_3.Init.RepetitionCounter = 0;
+	TimHandle1_3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	HAL_TIM_PWM_Init(&TimHandle1_3);
 	
 	sConfig.OCMode       = TIM_OCMODE_PWM1;
 	sConfig.Pulse        = pulse_cycles;
@@ -50,9 +50,9 @@ static int pwm1_3_pin_set(uint32_t period_cycles, uint32_t pulse_cycles, uint32_
 	sConfig.OCFastMode   = TIM_OCFAST_DISABLE;
 	sConfig.OCIdleState  = TIM_OCIDLESTATE_RESET;
 	sConfig.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-	HAL_TIM_PWM_ConfigChannel(&TimHandle3, &sConfig, TIM1_CHANNEL3);
+	HAL_TIM_PWM_ConfigChannel(&TimHandle1_3, &sConfig, TIM1_CHANNEL3);
 	
-	return HAL_TIM_PWM_Start(&TimHandle3, TIM1_CHANNEL3);
+	return HAL_TIM_PWM_Start(&TimHandle1_3, TIM1_CHANNEL3);
 }
 
 static struct pwm_api Pwm1_3_api = {

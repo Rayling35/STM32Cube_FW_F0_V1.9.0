@@ -279,8 +279,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\pwm3_4.c</PathWithFileName>
-      <FilenameWithoutPath>pwm3_4.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\pwm1_2.c</PathWithFileName>
+      <FilenameWithoutPath>pwm1_2.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

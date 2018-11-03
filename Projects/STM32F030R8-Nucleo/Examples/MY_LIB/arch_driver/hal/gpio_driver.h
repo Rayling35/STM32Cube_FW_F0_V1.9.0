@@ -9,6 +9,26 @@ struct gpio_data {
 	struct gpio_api *Gpio_hal;
 };
 
+#ifdef GPIO_A0_DEV
+struct device* gpio_a0_device_binding(void);
+#endif
+
+#ifdef GPIO_A1_DEV
+struct device* gpio_a1_device_binding(void);
+#endif
+
+#ifdef GPIO_A3_DEV
+struct device* gpio_a3_device_binding(void);
+#endif
+
+#ifdef GPIO_A11_DEV
+struct device* gpio_a11_device_binding(void);
+#endif
+
+#ifdef GPIO_B1_DEV
+struct device* gpio_b1_device_binding(void);
+#endif
+
 #ifdef GPIO_B2_DEV
 struct device* gpio_b2_device_binding(void);
 #endif

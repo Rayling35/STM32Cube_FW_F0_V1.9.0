@@ -9,6 +9,10 @@ struct pwm_data {
 	struct pwm_api *Pwm_hal;
 };
 
+#ifdef PWM1_2_DEV
+struct device* pwm1_2_device_binding(void);
+#endif
+
 #ifdef PWM1_3_DEV
 struct device* pwm1_3_device_binding(void);
 #endif

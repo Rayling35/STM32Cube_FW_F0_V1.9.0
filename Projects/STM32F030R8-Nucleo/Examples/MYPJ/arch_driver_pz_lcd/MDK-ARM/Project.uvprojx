@@ -334,7 +334,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--C99</MiscControls>
-              <Define>USE_HAL_DRIVER, STM32F030x8, GPIO_C5_DEV, GPIO_C6_DEV, GPIO_C8_DEV, C5_OUTPUT, C6_OUTPUT, C8_OUTPUT</Define>
+              <Define>USE_HAL_DRIVER, STM32F030x8, A0_OUTPUT, A1_OUTPUT, B1_OUTPUT, GPIO_A0_DEV, GPIO_A1_DEV, GPIO_B1_DEV</Define>
               <Undefine></Undefine>
               <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_define\ap;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver;..\..\..\MY_LIB\arch_driver\ap;..\..\..\MY_LIB\extra</IncludePath>
             </VariousControls>
@@ -436,19 +436,19 @@
               <FilePath>..\..\..\MY_LIB\uart_printf.c</FilePath>
             </File>
             <File>
-              <FileName>gpio_c5.c</FileName>
+              <FileName>gpio_a0.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\gpio_c5.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\gpio_a0.c</FilePath>
             </File>
             <File>
-              <FileName>gpio_c6.c</FileName>
+              <FileName>gpio_a1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\gpio_c6.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\gpio_a1.c</FilePath>
             </File>
             <File>
-              <FileName>gpio_c8.c</FileName>
+              <FileName>gpio_b1.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\gpio_c8.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\gpio_b1.c</FilePath>
             </File>
           </Files>
         </Group>

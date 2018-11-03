@@ -2,18 +2,18 @@
  * SPDX-License-Identifier: MIT
  */
 #include "stm32f0xx_hal.h"
-#include "gpio_c5.h"
-#include "gpio_c6.h"
-#include "gpio_c8.h"
+#include "gpio_a0.h"
+#include "gpio_a1.h"
+#include "gpio_b1.h"
 #include "ht1621.h"
 
 
-#define  CS_LOW        C5_OUTPUT_LOW()
-#define  CS_HIGH       C5_OUTPUT_HIGH()
-#define  WR_LOW        C6_OUTPUT_LOW()
-#define  WR_HIGH       C6_OUTPUT_HIGH()
-#define  DATA_LOW      C8_OUTPUT_LOW()
-#define  DATA_HIGH     C8_OUTPUT_HIGH()
+#define  CS_LOW        A0_OUTPUT_LOW()
+#define  CS_HIGH       A0_OUTPUT_HIGH()
+#define  WR_LOW        A1_OUTPUT_LOW()
+#define  WR_HIGH       A1_OUTPUT_HIGH()
+#define  DATA_LOW      B1_OUTPUT_LOW()
+#define  DATA_HIGH     B1_OUTPUT_HIGH()
 
 static void addr_cmd_bit(uint8_t data, uint8_t cnt)
 {

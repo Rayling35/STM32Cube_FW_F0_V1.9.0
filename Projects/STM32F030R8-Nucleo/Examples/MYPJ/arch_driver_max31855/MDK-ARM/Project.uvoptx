@@ -279,8 +279,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\spi1.c</PathWithFileName>
-      <FilenameWithoutPath>spi1.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\spi2.c</PathWithFileName>
+      <FilenameWithoutPath>spi2.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -291,8 +291,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\spi1_cs0.c</PathWithFileName>
-      <FilenameWithoutPath>spi1_cs0.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\spi2_cs0.c</PathWithFileName>
+      <FilenameWithoutPath>spi2_cs0.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

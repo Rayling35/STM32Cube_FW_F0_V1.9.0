@@ -83,6 +83,176 @@ static const struct gpio_common_api Gpio_common_api = {
 };
 
 
+#ifdef GPIO_A0_DEV
+#include "gpio_a0.h"
+static struct gpio_data Gpio_a0_data;
+
+static int gpio_a0_device_init(struct device *Dev)
+{
+	struct gpio_data *D_data = Dev->data;
+	
+	D_data->Gpio_hal = gpio_a0_binding();
+	D_data->Gpio_hal->init();
+	printf("GPIO_A0 device init\r\n");
+
+	return 0;
+}
+
+struct device Gpio_a0 = {
+	.api  = &Gpio_common_api,
+	.data = &Gpio_a0_data,
+	.init = gpio_a0_device_init,
+};
+
+struct device* gpio_a0_device_binding(void)
+{
+	return &Gpio_a0;
+}
+
+#ifdef A0_EXTI
+__weak void a0_exti_handel(void)
+{
+}
+#endif
+#endif
+
+
+#ifdef GPIO_A1_DEV
+#include "gpio_a1.h"
+static struct gpio_data Gpio_a1_data;
+
+static int gpio_a1_device_init(struct device *Dev)
+{
+	struct gpio_data *D_data = Dev->data;
+	
+	D_data->Gpio_hal = gpio_a1_binding();
+	D_data->Gpio_hal->init();
+	printf("GPIO_A1 device init\r\n");
+
+	return 0;
+}
+
+struct device Gpio_a1 = {
+	.api  = &Gpio_common_api,
+	.data = &Gpio_a1_data,
+	.init = gpio_a1_device_init,
+};
+
+struct device* gpio_a1_device_binding(void)
+{
+	return &Gpio_a1;
+}
+
+#ifdef A1_EXTI
+__weak void a1_exti_handel(void)
+{
+}
+#endif
+#endif
+
+
+#ifdef GPIO_A3_DEV
+#include "gpio_a3.h"
+static struct gpio_data Gpio_a3_data;
+
+static int gpio_a3_device_init(struct device *Dev)
+{
+	struct gpio_data *D_data = Dev->data;
+	
+	D_data->Gpio_hal = gpio_a3_binding();
+	D_data->Gpio_hal->init();
+	printf("GPIO_A3 device init\r\n");
+
+	return 0;
+}
+
+struct device Gpio_a3 = {
+	.api  = &Gpio_common_api,
+	.data = &Gpio_a3_data,
+	.init = gpio_a3_device_init,
+};
+
+struct device* gpio_a3_device_binding(void)
+{
+	return &Gpio_a3;
+}
+
+#ifdef A3_EXTI
+__weak void a3_exti_handel(void)
+{
+}
+#endif
+#endif
+
+
+#ifdef GPIO_A11_DEV
+#include "gpio_a11.h"
+static struct gpio_data Gpio_a11_data;
+
+static int gpio_a11_device_init(struct device *Dev)
+{
+	struct gpio_data *D_data = Dev->data;
+	
+	D_data->Gpio_hal = gpio_a11_binding();
+	D_data->Gpio_hal->init();
+	printf("GPIO_A11 device init\r\n");
+
+	return 0;
+}
+
+struct device Gpio_a11 = {
+	.api  = &Gpio_common_api,
+	.data = &Gpio_a11_data,
+	.init = gpio_a11_device_init,
+};
+
+struct device* gpio_a11_device_binding(void)
+{
+	return &Gpio_a11;
+}
+
+#ifdef A11_EXTI
+__weak void a11_exti_handel(void)
+{
+}
+#endif
+#endif
+
+
+#ifdef GPIO_B1_DEV
+#include "gpio_b1.h"
+static struct gpio_data Gpio_b1_data;
+
+static int gpio_b1_device_init(struct device *Dev)
+{
+	struct gpio_data *D_data = Dev->data;
+	
+	D_data->Gpio_hal = gpio_b1_binding();
+	D_data->Gpio_hal->init();
+	printf("GPIO_B1 device init\r\n");
+
+	return 0;
+}
+
+struct device Gpio_b1 = {
+	.api  = &Gpio_common_api,
+	.data = &Gpio_b1_data,
+	.init = gpio_b1_device_init,
+};
+
+struct device* gpio_b1_device_binding(void)
+{
+	return &Gpio_b1;
+}
+
+#ifdef B1_EXTI
+__weak void b1_exti_handel(void)
+{
+}
+#endif
+#endif
+
+
 #ifdef GPIO_B2_DEV
 #include "gpio_b2.h"
 static struct gpio_data Gpio_b2_data;

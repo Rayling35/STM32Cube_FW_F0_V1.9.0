@@ -334,7 +334,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--C99</MiscControls>
-              <Define>USE_HAL_DRIVER, STM32F030x8, PWM3_4_DEV</Define>
+              <Define>USE_HAL_DRIVER, STM32F030x8, PWM1_2_DEV</Define>
               <Undefine></Undefine>
               <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_define\ap;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver;..\..\..\MY_LIB\arch_driver\ap;..\..\..\MY_LIB\extra</IncludePath>
             </VariousControls>
@@ -421,9 +421,9 @@
               <FilePath>..\..\..\MY_LIB\uart_printf.c</FilePath>
             </File>
             <File>
-              <FileName>pwm3_4.c</FileName>
+              <FileName>pwm1_2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\pwm3_4.c</FilePath>
+              <FilePath>..\..\..\MY_LIB\pwm1_2.c</FilePath>
             </File>
           </Files>
         </Group>

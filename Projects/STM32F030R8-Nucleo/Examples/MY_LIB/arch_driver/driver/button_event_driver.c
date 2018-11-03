@@ -19,11 +19,11 @@ static uint32_t get_press_time_data(struct device *Dev)
 		start_press_time = osKernelSysTick();
 	}
 	
-	if(gpio_read(D_data->Gpio_c13) != D_data->value_pin_original_status) {
+	if(gpio_read(D_data->Gpio) != D_data->value_pin_original_status) {
 		return (osKernelSysTick() - start_press_time);
 	}
 	
-	if(gpio_read(D_data->Gpio_c13) == D_data->value_pin_original_status) {
+	if(gpio_read(D_data->Gpio) == D_data->value_pin_original_status) {
 		start_press_time = 0;
 	}
 	
@@ -156,10 +156,10 @@ static int button_event_device_init(struct device *Dev)
 {
 	struct button_event_data *D_data = Dev->data;
 	
-	D_data->Gpio_c13 = gpio_c13_device_binding();
-	gpio_init(D_data->Gpio_c13);
+	D_data->Gpio = gpio_c13_device_binding();
+	gpio_init(D_data->Gpio);
 	
-	D_data->value_pin_original_status = gpio_read(D_data->Gpio_c13);
+	D_data->value_pin_original_status = gpio_read(D_data->Gpio);
 	
 	printf("Button Event device init\r\n");
 	return 0;

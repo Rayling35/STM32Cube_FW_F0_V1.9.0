@@ -8,7 +8,7 @@
   <Extensions>
     <cExt>*.c</cExt>
     <aExt>*.s*; *.src; *.a*</aExt>
-    <oExt>*.obj</oExt>
+    <oExt>*.obj; *.o</oExt>
     <lExt>*.lib</lExt>
     <tExt>*.txt; *.h; *.inc</tExt>
     <pExt>*.plm</pExt>
@@ -311,8 +311,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\gpio_c5.c</PathWithFileName>
-      <FilenameWithoutPath>gpio_c5.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\gpio_a0.c</PathWithFileName>
+      <FilenameWithoutPath>gpio_a0.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -323,8 +323,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\gpio_c6.c</PathWithFileName>
-      <FilenameWithoutPath>gpio_c6.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\gpio_a1.c</PathWithFileName>
+      <FilenameWithoutPath>gpio_a1.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -335,8 +335,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\MY_LIB\gpio_c8.c</PathWithFileName>
-      <FilenameWithoutPath>gpio_c8.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\MY_LIB\gpio_b1.c</PathWithFileName>
+      <FilenameWithoutPath>gpio_b1.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

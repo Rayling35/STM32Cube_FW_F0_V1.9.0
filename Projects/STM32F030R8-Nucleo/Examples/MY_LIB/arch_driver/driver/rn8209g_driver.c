@@ -175,18 +175,18 @@ static void fetch_voltage(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_URMS, reg_data, 3);
-	printf("RN8209G_URMS    = 0x%06X, %d\r\n", *data, *data);
+//	printf("RN8209G_URMS    = 0x%06X, %d\r\n", *data, *data);
 	*data = D_config->value_kv * *data / 100000;
 	D_data->value_voltage_integer = *data / 100;
 	D_data->value_voltage_decimal = *data % 100;
-	printf("RN8209G_URMS    = %d.%dV\r\n", D_data->value_voltage_integer, D_data->value_voltage_decimal);
+//	printf("RN8209G_URMS    = %d.%dV\r\n", D_data->value_voltage_integer, D_data->value_voltage_decimal);
 	
 	reg_data[3] = 0;
 	reg_data[2] = 0;
 	register_read(Dev, RN8209G_UFreq, reg_data, 2);
-	printf("RN8209G_UFreq   = 0x%04X, %d\r\n", *data, *data);
+//	printf("RN8209G_UFreq   = 0x%04X, %d\r\n", *data, *data);
 	*data = D_config->value_clkin*100 / 8 / *data;
-	printf("RN8209G_UFreq   = %d.%dHz\r\n", *data/100, *data%100);
+//	printf("RN8209G_UFreq   = %d.%dHz\r\n", *data/100, *data%100);
 }
 
 static void fetch_current(struct device *Dev)
@@ -198,11 +198,11 @@ static void fetch_current(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_IARMS, reg_data, 3);
-	printf("RN8209G_IARMS   = 0x%06X, %d\r\n", *data, *data);
+//	printf("RN8209G_IARMS   = 0x%06X, %d\r\n", *data, *data);
 	*data = D_config->value_kia * *data / 1000000;
 	D_data->value_current_integer = *data / 100;
 	D_data->value_current_decimal = *data % 100;
-	printf("RN8209G_IARMS   = %d.%dA\r\n", D_data->value_current_integer, D_data->value_current_decimal);
+//	printf("RN8209G_IARMS   = %d.%dA\r\n", D_data->value_current_integer, D_data->value_current_decimal);
 }
 
 static void fetch_power(struct device *Dev)
@@ -213,11 +213,11 @@ static void fetch_power(struct device *Dev)
 	uint32_t *data = (uint32_t *)reg_data;
 	
 	register_read(Dev, RN8209G_PowerPA, reg_data, 4);
-	printf("RN8209G_PowerPA = 0x%08X, %d\r\n", *data, *data);
+//	printf("RN8209G_PowerPA = 0x%08X, %d\r\n", *data, *data);
 	*data = D_config->value_kp * *data / 1000000;
 	D_data->value_power_integer = *data / 100;
 	D_data->value_power_decimal = *data % 100;
-	printf("RN8209G_PowerPA = %d.%dW\r\n", D_data->value_power_integer, D_data->value_power_decimal);
+//	printf("RN8209G_PowerPA = %d.%dW\r\n", D_data->value_power_integer, D_data->value_power_decimal);
 }
 
 static void fetch_consumption(struct device *Dev)
@@ -228,10 +228,10 @@ static void fetch_consumption(struct device *Dev)
 	
 	reg_data[3] = 0;
 	register_read(Dev, RN8209G_EnergyP, reg_data, 3);
-	printf("RN8209G_EnergyP = 0x%06X, %d\r\n", *data, *data);
+//	printf("RN8209G_EnergyP = 0x%06X, %d\r\n", *data, *data);
 	
 	D_data->value_consumption_integer = *data;
-	printf("RN8209G_EnergyP = %dWh\r\n", D_data->value_consumption_integer);
+//	printf("RN8209G_EnergyP = %dWh\r\n", D_data->value_consumption_integer);
 }
 
 static void register_list(struct device *Dev)
@@ -394,9 +394,9 @@ static int rn8209g_sample_fetch(struct device *Dev, enum sensor_type e_type)
 		default:
 			return -1;
 	}
-	printf("\r\n");
-	register_list(Dev);
-	printf("\r\n");
+//	printf("\r\n");
+//	register_list(Dev);
+//	printf("\r\n");
 	return 0;
 }
 
@@ -535,8 +535,8 @@ static int rn8209g_device_init(struct device *Dev)
 {
 	struct rn8209g_data *D_data = Dev->data;
 	
-	D_data->Spi = spi2_cs0_device_binding();
-	D_data->Gpio = gpio_b2_device_binding();
+	D_data->Spi = spi1_cs0_device_binding();
+	D_data->Gpio = gpio_a11_device_binding();
 	spi_init(D_data->Spi);
 	gpio_init(D_data->Gpio);
 	printf("RN8209G device init\r\n");

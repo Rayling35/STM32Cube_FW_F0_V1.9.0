@@ -29,6 +29,34 @@ static const struct pwm_common_api Pwm_common_api = {
 };
 
 
+#ifdef PWM1_2_DEV
+#include "pwm1_2.h"
+static struct pwm_data Pwm1_2_data;
+
+static int pwm1_2_device_init(struct device *Dev)
+{
+	struct pwm_data *D_data = Dev->data;
+	
+	D_data->Pwm_hal = pwm1_2_binding();
+	D_data->Pwm_hal->init();
+	printf("PWM1_2 device init\r\n");
+	
+	return 0;
+}
+
+struct device Pwm_1_2 = {
+	.api  = &Pwm_common_api,
+	.data = &Pwm1_2_data,
+	.init = pwm1_2_device_init,
+};
+
+struct device* pwm1_2_device_binding(void)
+{
+	return &Pwm_1_2;
+}
+#endif
+
+
 #ifdef PWM1_3_DEV
 #include "pwm1_3.h"
 static struct pwm_data Pwm1_3_data;
