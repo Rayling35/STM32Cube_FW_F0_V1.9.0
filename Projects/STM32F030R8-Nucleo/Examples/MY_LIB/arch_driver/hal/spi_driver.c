@@ -86,6 +86,7 @@ struct device* spi1_cs0_device_binding(void)
 }
 #endif
 
+
 #ifdef SPI2_CS0_DEV
 #include "spi2_cs0.h"
 static struct spi_data Spi2_cs0_data;

@@ -10,9 +10,9 @@ struct spi_data {
 };
 
 struct spi_config {
-	uint32_t value_tx_timeout;
-	uint32_t value_rx_timeout;
-	uint32_t value_tx_rx_timeout;
+	uint8_t value_tx_timeout;
+	uint8_t value_rx_timeout;
+	uint8_t value_tx_rx_timeout;
 };
 
 #ifdef SPI1_CS0_DEV
