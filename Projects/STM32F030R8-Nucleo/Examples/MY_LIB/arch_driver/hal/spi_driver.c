@@ -8,31 +8,31 @@
 #include "api_spi_common.h"
 
 
-static int transmit_data(struct device *Dev, uint8_t *tx_data, uint16_t length)
+static int transmit_data(struct device *Dev, uint8_t *data, uint16_t length)
 {
 	struct spi_data *D_data = Dev->data;
 	const struct spi_config *D_config = Dev->config;
 	struct spi_api *Spi_cs_hal = D_data->Spi_cs_hal;
 	
-	return Spi_cs_hal->transmit(tx_data, length, D_config->value_tx_timeout);
+	return Spi_cs_hal->transmit(data, length, D_config->value_tx_timeout);
 }
 
-static int receive_data(struct device *Dev, uint8_t *rx_data, uint16_t length)
+static int receive_data(struct device *Dev, uint8_t *data, uint16_t length)
 {
 	struct spi_data *D_data = Dev->data;
 	const struct spi_config *D_config = Dev->config;
 	struct spi_api *Spi_cs_hal = D_data->Spi_cs_hal;
 	
-	return Spi_cs_hal->receive(rx_data, length, D_config->value_rx_timeout);
+	return Spi_cs_hal->receive(data, length, D_config->value_rx_timeout);
 }
 
-static int receive_data32(struct device *Dev, uint32_t *rx_data, uint16_t length)
+static int receive_data32(struct device *Dev, uint32_t *data, uint16_t length)
 {
 	struct spi_data *D_data = Dev->data;
 	const struct spi_config *D_config = Dev->config;
 	struct spi_api *Spi_cs_hal = D_data->Spi_cs_hal;
 	
-	return Spi_cs_hal->receive32(rx_data, length, D_config->value_rx_timeout);
+	return Spi_cs_hal->receive32(data, length, D_config->value_rx_timeout);
 }
 
 static int transmit_receive_data(struct device *Dev, uint8_t *tx_data, uint8_t *rx_data, uint16_t length)
