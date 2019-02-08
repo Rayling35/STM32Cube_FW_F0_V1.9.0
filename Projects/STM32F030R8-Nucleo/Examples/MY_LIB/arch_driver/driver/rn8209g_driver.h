@@ -97,8 +97,6 @@ struct rn8209g_config {
 
 #define RN8209G_SPECIAL           0xEA
 
-#define REG_BIT_SET(data,reg,set) (set == 1 ? SET_BIT(data, 1 << reg) : CLEAR_BIT(data, 1 << reg))
-
 enum REG_SYSCON_00H {
 	PGAIA_0 = 0,
 	PGAIA_1,
