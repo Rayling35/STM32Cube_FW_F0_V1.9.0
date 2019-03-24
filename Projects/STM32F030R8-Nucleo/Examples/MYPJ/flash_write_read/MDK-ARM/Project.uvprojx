@@ -393,6 +393,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>MY_LIB/Extra</GroupName>
+          <Files>
+            <File>
+              <FileName>flash_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\MY_LIB\extra\flash_internal.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>MY_LIB/API</GroupName>
           <Files>
             <File>
@@ -404,11 +414,6 @@
               <FileName>uart_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\MY_LIB\uart_printf.c</FilePath>
-            </File>
-            <File>
-              <FileName>flash_internal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\MY_LIB\extra\flash_internal.c</FilePath>
             </File>
           </Files>
         </Group>
