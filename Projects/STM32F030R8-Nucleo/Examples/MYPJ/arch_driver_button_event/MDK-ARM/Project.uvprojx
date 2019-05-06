@@ -334,7 +334,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--C99</MiscControls>
-              <Define>USE_HAL_DRIVER, STM32F030x8, GPIO_C13_DEV, C13_INPUT</Define>
+              <Define>USE_HAL_DRIVER, STM32F030x8, A11_INPUT, C13_INPUT, GPIO_A11_DEV, GPIO_C13_DEV, BUTTON_C13_EVENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\Inc;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\..\..\..\..\..\Drivers\STM32F0xx_HAL_Driver\Inc;..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS;..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\..\MY_LIB;..\..\..\MY_LIB\arch_define;..\..\..\MY_LIB\arch_define\hal;..\..\..\MY_LIB\arch_define\driver;..\..\..\MY_LIB\arch_driver\hal;..\..\..\MY_LIB\arch_driver\driver</IncludePath>
             </VariousControls>
@@ -419,6 +419,11 @@
               <FileName>uart_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\MY_LIB\uart_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_a11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\MY_LIB\gpio_a11.c</FilePath>
             </File>
             <File>
               <FileName>gpio_c13.c</FileName>

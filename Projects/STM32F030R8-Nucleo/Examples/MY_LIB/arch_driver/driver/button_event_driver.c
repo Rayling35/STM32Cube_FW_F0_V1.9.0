@@ -150,9 +150,40 @@ static const struct button_event_common_api Button_event_api = {
 	.get_press_status = get_press_status_data,
 };
 
-static struct button_event_data Button_event_data;
 
-static int button_event_device_init(struct device *Dev)
+#ifdef BUTTON_A11_EVENT
+static struct button_event_data Button_a11_event_data;
+
+static int button_a11_event_device_init(struct device *Dev)
+{
+	struct button_event_data *D_data = Dev->data;
+	
+	D_data->Gpio = gpio_a11_device_binding();
+	gpio_init(D_data->Gpio);
+	
+	D_data->value_pin_original_status = gpio_read(D_data->Gpio);
+	
+	printf("Button A11 Event device init\r\n");
+	return 0;
+}
+
+struct device Button_a11_event = {
+	.api  = &Button_event_api,
+	.data = &Button_a11_event_data,
+	.init = button_a11_event_device_init,
+};
+
+struct device* button_a11_event_device_binding(void)
+{
+	return &Button_a11_event;
+}
+#endif
+
+
+#ifdef BUTTON_C13_EVENT
+static struct button_event_data Button_c13_event_data;
+
+static int button_c13_event_device_init(struct device *Dev)
 {
 	struct button_event_data *D_data = Dev->data;
 	
@@ -161,17 +192,18 @@ static int button_event_device_init(struct device *Dev)
 	
 	D_data->value_pin_original_status = gpio_read(D_data->Gpio);
 	
-	printf("Button Event device init\r\n");
+	printf("Button C13 Event device init\r\n");
 	return 0;
 }
 
-struct device Button_event = {
+struct device Button_c13_event = {
 	.api  = &Button_event_api,
-	.data = &Button_event_data,
-	.init = button_event_device_init,
+	.data = &Button_c13_event_data,
+	.init = button_c13_event_device_init,
 };
 
-struct device* button_event_device_binding(void)
+struct device* button_c13_event_device_binding(void)
 {
-	return &Button_event;
+	return &Button_c13_event;
 }
+#endif

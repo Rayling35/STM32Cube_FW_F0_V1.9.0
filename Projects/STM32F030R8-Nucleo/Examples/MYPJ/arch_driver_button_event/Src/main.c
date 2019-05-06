@@ -478,7 +478,13 @@ int main(void)
 	system_initialization();
 	uart_printf_init();
 	
-	struct device *Button_event = button_event_device_binding();
+	#ifdef BUTTON_A11_EVENT
+	struct device *Button_event = button_a11_event_device_binding();
+	#endif
+	
+	#ifdef BUTTON_C13_EVENT
+	struct device *Button_event = button_c13_event_device_binding();
+	#endif
 	
 	button_event_init(Button_event);
 	printf("All device init\r\n");

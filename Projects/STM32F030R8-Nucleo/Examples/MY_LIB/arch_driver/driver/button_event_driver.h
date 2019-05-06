@@ -11,7 +11,13 @@ struct button_event_data {
 	uint8_t value_pin_original_status;
 };
 
-struct device* button_event_device_binding(void);
+#ifdef BUTTON_A11_EVENT
+struct device* button_a11_event_device_binding(void);
+#endif
+
+#ifdef BUTTON_C13_EVENT
+struct device* button_c13_event_device_binding(void);
+#endif
 
 
 #endif
